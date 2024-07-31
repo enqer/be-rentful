@@ -1,4 +1,5 @@
 using Rentful.Api;
+using Rentful.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +8,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpContextAccessor();
-
+builder.Services.AddApplication();
 builder.ConfigureOptions();
 
 

@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Rentful.Application\Rentful.Application.csproj" />
+    <ProjectReference Include="..\Rentful.Infrastructure\Rentful.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

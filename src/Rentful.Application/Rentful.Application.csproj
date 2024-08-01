@@ -16,4 +16,8 @@
     <Folder Include="UseCases\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Rentful.Domain\Rentful.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

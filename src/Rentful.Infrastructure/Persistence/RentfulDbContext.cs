@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Rentful.Domain.Entities;
+using Rentful.Application.Common.Interfaces;
 
 namespace Rentful.Infrastructure.Persistence
 {
-    internal class RentfulDbContext : DbContext
+    public class RentfulDbContext : DbContext, IRepository
     {
 
         public RentfulDbContext(DbContextOptions<RentfulDbContext> options) : base(options) { }

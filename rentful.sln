@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rentful.Domain", "src\Rentf
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rentful.Infrastructure", "src\Rentful.Infrastructure\Rentful.Infrastructure.csproj", "{B189ABBA-50C5-4314-BA2F-D5D745C939DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rentful.Tests", "src\Rentful.Tests\Rentful.Tests.csproj", "{40A368C0-2924-4B08-A2E3-3495CA372827}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{B189ABBA-50C5-4314-BA2F-D5D745C939DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B189ABBA-50C5-4314-BA2F-D5D745C939DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B189ABBA-50C5-4314-BA2F-D5D745C939DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40A368C0-2924-4B08-A2E3-3495CA372827}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40A368C0-2924-4B08-A2E3-3495CA372827}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40A368C0-2924-4B08-A2E3-3495CA372827}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40A368C0-2924-4B08-A2E3-3495CA372827}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

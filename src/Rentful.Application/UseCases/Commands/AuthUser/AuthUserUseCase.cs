@@ -6,11 +6,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Rentful.Application.UseCases.Commands.GenerateTokenUseCase
+namespace Rentful.Application.UseCases.Commands.LoginUser
 {
-    public static class GenerateTokenUseCase
+    public static class AuthUserUseCase
     {
-        public record Command() : IRequest<string>;
+        public record Command(string Email, string Password) : IRequest<string>;
         internal class Handler : IRequestHandler<Command, string>
         {
             private readonly JwtSettings jwtSettings;
@@ -20,6 +20,7 @@ namespace Rentful.Application.UseCases.Commands.GenerateTokenUseCase
             }
             public async Task<string> Handle(Command request, CancellationToken cancellationToken)
             {
+                // Checking in db 
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.UTF8.GetBytes(jwtSettings.Key);
 

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Rentful.Application.UseCases.Commands.GenerateTokenUseCase;
+using Rentful.Application.UseCases.Commands.LoginUser;
 
 namespace Rentful.Api.Controllers
 {
@@ -9,8 +9,15 @@ namespace Rentful.Api.Controllers
     public class IdentityController(IMediator mediator) : ControllerBase
     {
 
-        [HttpPost("token")]
-        public async Task<IActionResult> GenerateToken([FromBody] GenerateTokenUseCase.Command command, CancellationToken cancellationToken)
+        [HttpPost("register")]
+        public async Task<IActionResult> RegisterUser([FromBody] AuthUserUseCase.Command command, CancellationToken cancellationToken)
+        {
+            var response = await mediator.Send(command, cancellationToken);
+            return Ok(response);
+        }
+
+        [HttpPost("auth")]
+        public async Task<IActionResult> AuthUser([FromBody] AuthUserUseCase.Command command, CancellationToken cancellationToken)
         {
             var response = await mediator.Send(command, cancellationToken);
             return Ok(response);

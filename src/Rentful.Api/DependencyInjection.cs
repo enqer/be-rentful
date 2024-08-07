@@ -1,15 +1,43 @@
-﻿namespace Rentful.Api
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Rentful.Domain.Options;
+using System.Text;
+
+namespace Rentful.Api
 {
     public static class DependencyInjection
     {
         public static void ConfigureOptions(this WebApplicationBuilder webApplicationBuilder)
         {
+            webApplicationBuilder.ConfigureOption<JwtSettings>();
         }
 
         private static WebApplicationBuilder ConfigureOption<T>(this WebApplicationBuilder webApplicationBuilder) where T : class
         {
             webApplicationBuilder.Services.Configure<T>(webApplicationBuilder.Configuration.GetSection(typeof(T).Name));
             return webApplicationBuilder;
+        }
+
+        public static void ConfigureAuthentication(this WebApplicationBuilder webApplicationBuilder, IConfiguration configuration)
+        {
+            webApplicationBuilder.Services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+            {
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer = configuration["JwtSettings:Issuer"],
+                    ValidAudience = configuration["JwtSettings:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]!)),
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true
+                };
+            });
         }
     }
 }

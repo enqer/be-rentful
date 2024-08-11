@@ -1,11 +1,11 @@
 using Rentful.Api;
 using Rentful.Application;
+using Rentful.Application.Middlewares;
 using Rentful.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
-builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplication();
@@ -13,6 +13,8 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.ConfigureOptions();
 builder.ConfigureAuthentication(builder.Configuration);
 builder.Services.AddAuthorization();
+
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -27,6 +29,8 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseMiddleware<ValidationMiddleware>();
 
 app.MapControllers();
 

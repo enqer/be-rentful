@@ -12,7 +12,9 @@ builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.ConfigureOptions();
 builder.ConfigureAuthentication(builder.Configuration);
+//builder.ConfigureLogging();
 builder.Services.AddAuthorization();
+
 
 builder.Services.AddControllers();
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using NLog.Extensions.Logging;
 using Rentful.Domain.Options;
 using System.Text;
 
@@ -38,6 +39,16 @@ namespace Rentful.Api
                     ValidateIssuerSigningKey = true
                 };
             });
+        }
+
+        public static void ConfigureLogging(this WebApplicationBuilder webApplicationBuilder)
+        {
+            webApplicationBuilder.Services.AddLogging(logging =>
+            {
+                logging.ClearProviders();
+                logging.SetMinimumLevel(LogLevel.Information);
+            });
+            webApplicationBuilder.Services.AddSingleton<ILoggerProvider, NLogLoggerProvider>();
         }
     }
 }

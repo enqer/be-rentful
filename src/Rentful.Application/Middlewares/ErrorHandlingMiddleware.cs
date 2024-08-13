@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Rentful.Application.Exceptions;
 
 namespace Rentful.Application.Middlewares
 {
@@ -17,6 +18,11 @@ namespace Rentful.Application.Middlewares
             try
             {
                 await next.Invoke(context);
+            }
+            catch (NotFoundException notFound)
+            {
+                context.Response.StatusCode = 404;
+                await context.Response.WriteAsync(notFound.Message);
             }
             catch (Exception ex)
             {

@@ -38,4 +38,6 @@ app.UseMiddleware<ValidationMiddleware>();
 
 app.MapControllers();
 
+app.ApplyMigrations();
+
 app.Run();

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Rentful.Infrastructure.Persistence;
@@ -16,6 +17,19 @@ namespace Rentful.Infrastructure
             });
 
             return services;
+        }
+        public static WebApplication ApplyMigrations(this WebApplication app)
+        {
+            using var scope = app.Services.CreateScope();
+            var db = scope.ServiceProvider.GetRequiredService<RentfulDbContext>();
+            if (db != null)
+            {
+                if (db.Database.GetPendingMigrations().Any())
+                {
+                    db.Database.Migrate();
+                }
+            }
+            return app;
         }
     }
 }

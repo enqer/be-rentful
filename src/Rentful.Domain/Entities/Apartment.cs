@@ -12,6 +12,10 @@ namespace Rentful.Domain.Entities
         public int AddressId { get; set; }
         public Address Address { get; set; } = new Address();
 
+        [Column("apartmentDetailsId")]
+        public int ApartmentDetailsId { get; set; }
+        public ApartmentDetails ApartmentDetails { get; set; } = new ApartmentDetails();
+
         public int? OwnerId { get; set; }
         public User? Owner { get; set; }
 

@@ -27,6 +27,12 @@ public class ApartmentConfiguration : IEntityTypeConfiguration<Apartment>
             .OnDelete(DeleteBehavior.SetNull);
 
         builder
+            .HasOne(a => a.ApartmentDetails)
+           .WithOne(ad => ad.Apartment)
+           .HasForeignKey<Apartment>(a => a.ApartmentDetailsId)
+           .OnDelete(DeleteBehavior.Cascade);
+
+        builder
             .Property(a => a.Id)
             .IsRequired();
     }

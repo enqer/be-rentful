@@ -9,8 +9,15 @@ public class ApartmentDetailsConfiguration : IEntityTypeConfiguration<ApartmentD
         builder.HasKey(ad => ad.Id);
 
         builder
-            .HasOne(ad => ad.Apartment)
-            .WithOne(a => a.ApartmentDetails)
-            .HasForeignKey<Apartment>(a => a.ApartmentDetailsId);
+            .HasOne(a => a.Owner)
+            .WithMany(u => u.OwnedApartments)
+            .HasForeignKey(a => a.OwnerId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder
+            .HasMany(a => a.RentalAgreements)
+            .WithOne(ra => ra.Apartment)
+            .HasForeignKey(ra => ra.ApartmentId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

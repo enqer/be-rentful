@@ -15,18 +15,6 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .OnDelete(DeleteBehavior.Cascade);
 
         builder
-            .HasMany(u => u.OwnedApartments)
-            .WithOne(a => a.Owner)
-            .HasForeignKey(a => a.OwnerId)
-            .OnDelete(DeleteBehavior.SetNull);
-
-        builder
-            .HasMany(u => u.RentedApartments)
-            .WithOne(a => a.Tenant)
-            .HasForeignKey(a => a.TenantId)
-            .OnDelete(DeleteBehavior.SetNull);
-
-        builder
             .Property(u => u.Email)
             .IsRequired()
             .HasMaxLength(100);

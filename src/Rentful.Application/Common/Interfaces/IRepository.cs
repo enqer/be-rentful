@@ -1,11 +1,12 @@
-﻿using Rentful.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Rentful.Domain.Entities;
 
 namespace Rentful.Application.Common.Interfaces
 {
     public interface IRepository
     {
         public DbSet<User> Users { get; }
+        public DbSet<Address> Addresses { get; }
 
         int SaveChanges();
         int SaveChanges(bool acceptAllChangesOnSuccess);

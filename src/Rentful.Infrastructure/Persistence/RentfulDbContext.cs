@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Rentful.Domain.Entities;
 using Rentful.Application.Common.Interfaces;
+using Rentful.Domain.Entities;
+using System.Reflection;
 
 namespace Rentful.Infrastructure.Persistence
 {
@@ -10,10 +11,12 @@ namespace Rentful.Infrastructure.Persistence
         public RentfulDbContext(DbContextOptions<RentfulDbContext> options) : base(options) { }
 
         public DbSet<User> Users => Set<User>();
+        public DbSet<Address> Addresses => Set<Address>();
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(RentfulDbContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(modelBuilder);
         }
     }

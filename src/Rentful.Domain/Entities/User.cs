@@ -10,9 +10,7 @@ namespace Rentful.Domain.Entities
         [Column("email")]
         public string Email { get; set; } = string.Empty;
         [Column("telephone_number")]
-        public string TelephoneNumber { get; set; } = string.Empty;
-        [Column("full_name")]
-        public string FullName { get; set; } = string.Empty;
+        public string? TelephoneNumber { get; set; } = string.Empty;
         [Column("first_name")]
         public string FirstName { get; set; } = string.Empty;
         [Column("last_name")]
@@ -22,11 +20,8 @@ namespace Rentful.Domain.Entities
         public string Password { get; set; } = string.Empty;
 
         [Column("addressId")]
-        public int AddressId { get; set; }
+        public int? AddressId { get; set; }
         public Address Address { get; set; } = new Address();
 
-        public List<Apartment> RentedApartments { get; set; } = new List<Apartment>();
-
-        public List<Apartment> OwnedApartments { get; set; } = new List<Apartment>();
     }
 }

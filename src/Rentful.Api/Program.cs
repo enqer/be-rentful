@@ -5,18 +5,18 @@ using Rentful.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+builder.ConfigureAuthentication(builder.Configuration);
+builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
-builder.ConfigureOptions();
-builder.ConfigureAuthentication(builder.Configuration);
-//builder.ConfigureLogging();
-builder.Services.AddAuthorization();
-
-
 builder.Services.AddControllers();
+
+builder.ConfigureLogging();
+builder.ConfigureOptions();
+
+
 
 var app = builder.Build();
 

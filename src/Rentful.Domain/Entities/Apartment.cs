@@ -8,18 +8,29 @@ namespace Rentful.Domain.Entities
         [Column("id")]
         public int Id { get; set; }
 
-        [Column("address_id")]
-        public int AddressId { get; set; }
-        public Address Address { get; set; } = new Address();
+        [Column("area")]
+        public double Area { get; set; }
 
-        [Column("apartment_details_id")]
-        public int ApartmentDetailsId { get; set; }
-        public ApartmentDetails ApartmentDetails { get; set; } = new ApartmentDetails();
+        [Column("number_of_rooms")]
+        public short NumberOfRooms { get; set; }
 
-        [Column("owner_id")]
-        public int? OwnerId { get; set; }
-        public User? Owner { get; set; }
+        [Column("is_furnished")]
+        public bool IsFurnished { get; set; }
 
-        public List<RentalAgreement>? RentalAgreements { get; set; } = new List<RentalAgreement>();
+        [Column("is_animal_friendly")]
+        public bool IsAnimalFriendly { get; set; }
+
+        [Column("has_elevator")]
+        public bool HasElevator { get; set; }
+
+        [Column("has_balcony")]
+        public bool HasBalcony { get; set; }
+
+        [Column("has_parking_space")]
+        public bool HasParkingSpace { get; set; }
+
+        [Column("location_id")]
+        public int? LocationId { get; set; }
+        public Location Location { get; set; } = new Location();
     }
 }

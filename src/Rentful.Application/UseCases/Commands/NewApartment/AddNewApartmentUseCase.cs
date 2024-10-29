@@ -19,7 +19,8 @@ namespace Rentful.Application.UseCases.Commands.NewApartment
             bool IsFurnished,
             string Description,
             Coordinate? Coordinate,
-            string? City
+            string? City,
+            int UserId
             ) : IRequest;
 
         internal class Handler : IRequestHandler<Command>

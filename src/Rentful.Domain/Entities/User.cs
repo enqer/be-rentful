@@ -22,6 +22,7 @@ namespace Rentful.Domain.Entities
         [Column("address_id")]
         public int? AddressId { get; set; }
         public Address Address { get; set; } = new Address();
+        public List<Announcement> Announcements { get; set; } = new List<Announcement>();
 
     }
 }

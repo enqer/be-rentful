@@ -15,6 +15,12 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .OnDelete(DeleteBehavior.Cascade);
 
         builder
+            .HasMany(x => x.Announcements)
+            .WithOne(x => x.User)
+            .HasForeignKey(x => x.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder
             .Property(u => u.Email)
             .IsRequired()
             .HasMaxLength(100);

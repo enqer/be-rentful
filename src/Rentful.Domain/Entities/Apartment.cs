@@ -8,6 +8,15 @@ namespace Rentful.Domain.Entities
         [Column("id")]
         public int Id { get; set; }
 
+        [Column("price")]
+        public double Price { get; set; }
+
+        [Column("rent")]
+        public double? Rent { get; set; }
+
+        [Column("deposit")]
+        public double? Deposit { get; set; }
+
         [Column("area")]
         public double Area { get; set; }
 
@@ -30,7 +39,9 @@ namespace Rentful.Domain.Entities
         public bool HasParkingSpace { get; set; }
 
         [Column("location_id")]
-        public int? LocationId { get; set; }
+        public int LocationId { get; set; }
         public Location Location { get; set; } = new Location();
+
+        public List<Image> Images { get; set; } = new List<Image>();
     }
 }

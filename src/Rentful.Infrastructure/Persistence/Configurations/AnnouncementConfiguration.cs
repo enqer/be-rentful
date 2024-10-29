@@ -15,9 +15,11 @@ public class AnnouncementConfiguration : IEntityTypeConfiguration<Announcement>
            .OnDelete(DeleteBehavior.Cascade);
         builder
             .Property(u => u.Title)
+            .HasMaxLength(30)
             .IsRequired();
         builder
             .Property(u => u.Description)
+            .HasMaxLength(300)
             .IsRequired();
         builder
             .Property(u => u.DateAdded)

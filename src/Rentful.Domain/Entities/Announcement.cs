@@ -2,7 +2,7 @@
 
 namespace Rentful.Domain.Entities
 {
-    [Table("announcements", Schema = "public")]
+    [Table("announcements", Schema = "rentful")]
     public class Announcement
     {
         [Column("id")]

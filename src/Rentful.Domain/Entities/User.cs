@@ -2,7 +2,7 @@
 
 namespace Rentful.Domain.Entities
 {
-    [Table("users", Schema = "public")]
+    [Table("users", Schema = "rentful")]
     public class User
     {
         [Column("id")]
@@ -19,7 +19,7 @@ namespace Rentful.Domain.Entities
         [Column("password")]
         public string Password { get; set; } = string.Empty;
 
-        [Column("addressId")]
+        [Column("address_id")]
         public int? AddressId { get; set; }
         public Address Address { get; set; } = new Address();
 

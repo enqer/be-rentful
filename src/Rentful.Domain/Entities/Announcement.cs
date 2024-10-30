@@ -12,7 +12,7 @@ namespace Rentful.Domain.Entities
         [Column("description")]
         public string Description { get; set; } = string.Empty;
         [Column("date_added")]
-        public string DateAdded { get; set; } = string.Empty;
+        public DateTime DateAdded { get; set; }
 
         [Column("apartment_id")]
         public int? ApartmentId { get; set; }

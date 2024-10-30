@@ -8,7 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.ConfigureAuthentication(builder.Configuration);
 builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.CustomSchemaIds(type => $"{type.Name}_{Guid.NewGuid()}");
+});
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddControllers();

@@ -7,6 +7,10 @@ namespace Rentful.Application.Common.Interfaces
     {
         public DbSet<User> Users { get; }
         public DbSet<Address> Addresses { get; }
+        public DbSet<Image> Images { get; }
+        public DbSet<Location> Locations { get; }
+        public DbSet<Apartment> Apartments { get; }
+        public DbSet<Announcement> Announcements { get; }
 
         int SaveChanges();
         int SaveChanges(bool acceptAllChangesOnSuccess);

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Rentful.Application.Exceptions;
+using Rentful.Domain.Exceptions;
 
 namespace Rentful.Application.Middlewares
 {

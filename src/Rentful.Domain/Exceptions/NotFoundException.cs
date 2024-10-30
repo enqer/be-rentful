@@ -1,4 +1,4 @@
-﻿namespace Rentful.Application.Exceptions
+﻿namespace Rentful.Domain.Exceptions
 {
     public class NotFoundException : Exception
     {

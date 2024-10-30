@@ -12,6 +12,10 @@ namespace Rentful.Infrastructure.Persistence
 
         public DbSet<User> Users => Set<User>();
         public DbSet<Address> Addresses => Set<Address>();
+        public DbSet<Image> Images => Set<Image>();
+        public DbSet<Location> Locations => Set<Location>();
+        public DbSet<Apartment> Apartments => Set<Apartment>();
+        public DbSet<Announcement> Announcements => Set<Announcement>();
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

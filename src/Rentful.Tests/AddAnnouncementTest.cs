@@ -1,4 +1,5 @@
 ﻿using Rentful.Application.UseCases.Commands.NewApartment;
+using Rentful.Application.UseCases.Commands.NewApartment.Dtos;
 using Rentful.Domain.Entities;
 using Rentful.Domain.Exceptions;
 
@@ -12,7 +13,7 @@ namespace Rentful.Tests
         }
 
         [Fact]
-        public async Task Should_AddNewApartment()
+        public async Task Should_AddNewAnnouncement()
         {
             // Arrange
             var user = new User
@@ -20,7 +21,12 @@ namespace Rentful.Tests
                 Email = "test",
                 Id = 1,
             };
-            var command = new AddAnnouncementUseCase.Command("test", 1, 2, 1, 2, 1, new List<string> { "test" }, false, false, false, false, false, "", null, "city", 1);
+            var coords = new Coordinate
+            {
+                Lat = 53.13213M,
+                Lng = 19.323M,
+            };
+            var command = new AddAnnouncementUseCase.Command("test", 1, 2, 1, 2, 1, new List<string> { "test" }, false, false, false, false, false, "", coords, "city", 1);
             Repository.Users.Add(user);
             Repository.SaveChanges();
 
@@ -34,7 +40,7 @@ namespace Rentful.Tests
         }
 
         [Fact]
-        public async Task Should_AddApartmentWithThumbnailAsFirstImage()
+        public async Task Should_AddAnnouncementWithThumbnailAsFirstImage()
         {
             // Arrange
             var user = new User
@@ -42,7 +48,12 @@ namespace Rentful.Tests
                 Email = "test",
                 Id = 1,
             };
-            var command = new AddAnnouncementUseCase.Command("test", 1, 2, 1, 2, 1, new List<string> { "test1", "test2", "test3" }, false, false, false, false, false, "", null, "city", 1);
+            var coords = new Coordinate
+            {
+                Lat = 53.13213M,
+                Lng = 19.323M,
+            };
+            var command = new AddAnnouncementUseCase.Command("test", 1, 2, 1, 2, 1, new List<string> { "test1", "test2", "test3" }, false, false, false, false, false, "", coords, "city", 1);
             Repository.Users.Add(user);
             Repository.SaveChanges();
 
@@ -57,17 +68,22 @@ namespace Rentful.Tests
         }
 
         [Fact]
-        public async Task Should_Throws_HttpResponseException_When_UserDoesntExist()
+        public async Task When_UserDoesntExist_Should_Throws_HttpResponseException()
         {
             // Arrange
-            var command = new AddAnnouncementUseCase.Command("test", 1, 2, 1, 2, 1, new List<string> { "test" }, false, false, false, false, false, "", null, "city", 1);
+            var coords = new Coordinate
+            {
+                Lat = 53.13213M,
+                Lng = 19.323M,
+            };
+            var command = new AddAnnouncementUseCase.Command("test", 1, 2, 1, 2, 1, new List<string> { "test" }, false, false, false, false, false, "", coords, "city", 1);
 
             // Act & Assert
             await Assert.ThrowsAsync<HttpResponseException>(async () => await Mediator.Send(command));
         }
 
         [Fact]
-        public async Task Should_Throws_HttpResponseException_When_ImagesAreEmpty()
+        public async Task When_ImagesAreEmpty_Should_Throws_HttpResponseException()
         {
             // Arrange
             var user = new User

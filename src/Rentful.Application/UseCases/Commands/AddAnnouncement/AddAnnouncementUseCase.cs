@@ -24,7 +24,7 @@ namespace Rentful.Application.UseCases.Commands.NewApartment
             bool HasBalcony,
             bool HasParkingSpace,
             string Description,
-            Coordinate? Coordinate,
+            Coordinate Coordinate,
             string? City,
             int UserId
             ) : IRequest<AddAnnouncementResponse>;
@@ -66,8 +66,8 @@ namespace Rentful.Application.UseCases.Commands.NewApartment
                     Rent = request.Rent,
                     Location = new Location
                     {
-                        Latitude = request.Coordinate?.Lat ?? 0,
-                        Longitude = request.Coordinate?.Lng ?? 0,
+                        Latitude = request.Coordinate.Lat,
+                        Longitude = request.Coordinate.Lng,
                         Place = request.City
                     }
                 };

@@ -14,8 +14,14 @@ namespace Rentful.Domain.Entities
         [Column("longitude")]
         public decimal Longitude { get; set; }
 
-        [Column("place")]
-        public string? Place { get; set; } = string.Empty;
+        [Column("province")]
+        public string Province { get; set; } = string.Empty;
+
+        [Column("city")]
+        public string City { get; set; } = string.Empty;
+
+        [Column("is_precise")]
+        public bool IsPrecise { get; set; }
 
     }
 }

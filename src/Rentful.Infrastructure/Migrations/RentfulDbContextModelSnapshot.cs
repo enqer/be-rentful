@@ -79,9 +79,8 @@ namespace Rentful.Infrastructure.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("apartment_id");
 
-                    b.Property<string>("DateAdded")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("date_added");
 
                     b.Property<string>("Description")
@@ -209,6 +208,15 @@ namespace Rentful.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("city");
+
+                    b.Property<bool>("IsPrecise")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_precise");
+
                     b.Property<decimal>("Latitude")
                         .HasColumnType("numeric")
                         .HasColumnName("latitude");
@@ -217,9 +225,10 @@ namespace Rentful.Infrastructure.Migrations
                         .HasColumnType("numeric")
                         .HasColumnName("longitude");
 
-                    b.Property<string>("Place")
+                    b.Property<string>("Province")
+                        .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("place");
+                        .HasColumnName("province");
 
                     b.HasKey("Id");
 

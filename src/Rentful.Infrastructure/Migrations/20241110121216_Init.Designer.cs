@@ -12,8 +12,8 @@ using Rentful.Infrastructure.Persistence;
 namespace Rentful.Infrastructure.Migrations
 {
     [DbContext(typeof(RentfulDbContext))]
-    [Migration("20241028195930_ApartmentTabel")]
-    partial class ApartmentTabel
+    [Migration("20241110121216_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -82,9 +82,8 @@ namespace Rentful.Infrastructure.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("apartment_id");
 
-                    b.Property<string>("DateAdded")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("date_added");
 
                     b.Property<string>("Description")
@@ -99,10 +98,16 @@ namespace Rentful.Infrastructure.Migrations
                         .HasColumnType("character varying(30)")
                         .HasColumnName("title");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer")
+                        .HasColumnName("user_id");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ApartmentId")
                         .IsUnique();
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("announcements", "rentful");
                 });
@@ -119,6 +124,10 @@ namespace Rentful.Infrastructure.Migrations
                     b.Property<double>("Area")
                         .HasColumnType("double precision")
                         .HasColumnName("area");
+
+                    b.Property<double?>("Deposit")
+                        .HasColumnType("double precision")
+                        .HasColumnName("deposit");
 
                     b.Property<bool>("HasBalcony")
                         .HasColumnType("boolean")
@@ -140,7 +149,7 @@ namespace Rentful.Infrastructure.Migrations
                         .HasColumnType("boolean")
                         .HasColumnName("is_furnished");
 
-                    b.Property<int?>("LocationId")
+                    b.Property<int>("LocationId")
                         .HasColumnType("integer")
                         .HasColumnName("location_id");
 
@@ -148,12 +157,49 @@ namespace Rentful.Infrastructure.Migrations
                         .HasColumnType("smallint")
                         .HasColumnName("number_of_rooms");
 
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision")
+                        .HasColumnName("price");
+
+                    b.Property<double?>("Rent")
+                        .HasColumnType("double precision")
+                        .HasColumnName("rent");
+
                     b.HasKey("Id");
 
                     b.HasIndex("LocationId")
                         .IsUnique();
 
                     b.ToTable("apartments", "rentful");
+                });
+
+            modelBuilder.Entity("Rentful.Domain.Entities.Image", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ApartmentId")
+                        .HasColumnType("integer")
+                        .HasColumnName("apartment_id");
+
+                    b.Property<bool>("IsThumbnail")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_thumbnail");
+
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("source");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApartmentId");
+
+                    b.ToTable("images", "rentful");
                 });
 
             modelBuilder.Entity("Rentful.Domain.Entities.Location", b =>
@@ -165,6 +211,15 @@ namespace Rentful.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("city");
+
+                    b.Property<bool>("IsPrecise")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_precise");
+
                     b.Property<decimal>("Latitude")
                         .HasColumnType("numeric")
                         .HasColumnName("latitude");
@@ -173,9 +228,10 @@ namespace Rentful.Infrastructure.Migrations
                         .HasColumnType("numeric")
                         .HasColumnName("longitude");
 
-                    b.Property<string>("Place")
+                    b.Property<string>("Province")
+                        .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("place");
+                        .HasColumnName("province");
 
                     b.HasKey("Id");
 
@@ -238,7 +294,15 @@ namespace Rentful.Infrastructure.Migrations
                         .HasForeignKey("Rentful.Domain.Entities.Announcement", "ApartmentId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("Rentful.Domain.Entities.User", "User")
+                        .WithMany("Announcements")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Apartment");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Rentful.Domain.Entities.Apartment", b =>
@@ -246,9 +310,21 @@ namespace Rentful.Infrastructure.Migrations
                     b.HasOne("Rentful.Domain.Entities.Location", "Location")
                         .WithOne()
                         .HasForeignKey("Rentful.Domain.Entities.Apartment", "LocationId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Location");
+                });
+
+            modelBuilder.Entity("Rentful.Domain.Entities.Image", b =>
+                {
+                    b.HasOne("Rentful.Domain.Entities.Apartment", "Apartment")
+                        .WithMany("Images")
+                        .HasForeignKey("ApartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Apartment");
                 });
 
             modelBuilder.Entity("Rentful.Domain.Entities.User", b =>
@@ -259,6 +335,16 @@ namespace Rentful.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Address");
+                });
+
+            modelBuilder.Entity("Rentful.Domain.Entities.Apartment", b =>
+                {
+                    b.Navigation("Images");
+                });
+
+            modelBuilder.Entity("Rentful.Domain.Entities.User", b =>
+                {
+                    b.Navigation("Announcements");
                 });
 #pragma warning restore 612, 618
         }

@@ -9,9 +9,9 @@ namespace Rentful.Api.Controllers
     public class LocationController(IMediator mediator) : ControllerBase
     {
         [HttpGet]
-        public async Task<IActionResult> GetLocationsProvince()
+        public async Task<IActionResult> GetProvinceCities()
         {
-            var query = new GetLocationsProvinceUseCase.Query();
+            var query = new GetProvinceCitiesUseCase.Query();
             var response = await mediator.Send(query);
             return Ok(response);
         }

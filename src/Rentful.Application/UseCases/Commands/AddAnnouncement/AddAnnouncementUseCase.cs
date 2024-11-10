@@ -24,8 +24,9 @@ namespace Rentful.Application.UseCases.Commands.NewApartment
             bool HasBalcony,
             bool HasParkingSpace,
             string Description,
-            Coordinate Coordinate,
+            Coordinate? Coordinate,
             string? City,
+            string? Province,
             int UserId
             ) : IRequest<AddAnnouncementResponse>;
 
@@ -50,6 +51,25 @@ namespace Rentful.Application.UseCases.Commands.NewApartment
                 {
                     throw new HttpResponseException(HttpStatusCode.BadRequest, "Błąd dodania oferty", "Ogłoszenie musi posiadać przynajmniej jedno zdjęcie");
                 }
+                if (request.Coordinate is null && request.City is null)
+                {
+                    throw new HttpResponseException(HttpStatusCode.BadRequest, "Błąd dodania oferty", "Ogłoszenie musi posiadać lokalizację");
+                }
+                var user = repository.Users.FirstOrDefault(x => x.Id == request.UserId)
+                   ?? throw new HttpResponseException(HttpStatusCode.NotFound, "Brak użytkownika", "Nie znaleziono użytkownika");
+
+                var location = new Location();
+                location.IsPrecise = request.Coordinate != null;
+                if (location.IsPrecise)
+                {
+                    location.Longitude = request.Coordinate?.Lng ?? 0;
+                    location.Latitude = request.Coordinate?.Lat ?? 0;
+                }
+                else
+                {
+                    location.Province = request.Province ?? string.Empty;
+                    location.City = request.City ?? string.Empty;
+                }
 
                 var apartment = new Apartment
                 {
@@ -64,16 +84,10 @@ namespace Rentful.Application.UseCases.Commands.NewApartment
                     NumberOfRooms = request.NumberOfRooms,
                     Price = request.Price,
                     Rent = request.Rent,
-                    Location = new Location
-                    {
-                        Latitude = request.Coordinate.Lat,
-                        Longitude = request.Coordinate.Lng,
-                        Place = request.City
-                    }
+                    Location = location
                 };
 
-                var user = repository.Users.FirstOrDefault(x => x.Id == request.UserId)
-                    ?? throw new HttpResponseException(HttpStatusCode.NotFound, "Brak użytkownika", "Nie znaleziono użytkownika");
+
                 var annoucement = new Announcement
                 {
                     Apartment = apartment,

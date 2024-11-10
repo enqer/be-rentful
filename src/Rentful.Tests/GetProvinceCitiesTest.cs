@@ -3,7 +3,7 @@ using Rentful.Domain.Entities;
 
 namespace Rentful.Tests
 {
-    public class GetLocationsProvinceTest : BaseTest
+    public class GetProvinceCitiesTest : BaseTest
     {
         [Fact]
         public async Task When_UserDoesntExist_Should_Throws_HttpResponseException()
@@ -35,7 +35,7 @@ namespace Rentful.Tests
             };
             Repository.Locations.AddRange(locations);
             await Repository.SaveChangesAsync();
-            var query = new GetLocationsProvinceUseCase.Query();
+            var query = new GetProvinceCitiesUseCase.Query();
 
             // Act
             var response = await Mediator.Send(query);

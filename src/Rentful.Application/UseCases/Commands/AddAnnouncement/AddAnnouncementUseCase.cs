@@ -58,18 +58,14 @@ namespace Rentful.Application.UseCases.Commands.NewApartment
                 var user = repository.Users.FirstOrDefault(x => x.Id == request.UserId)
                    ?? throw new HttpResponseException(HttpStatusCode.NotFound, "Brak użytkownika", "Nie znaleziono użytkownika");
 
-                var location = new Location();
-                location.IsPrecise = request.Coordinate != null;
-                if (location.IsPrecise)
+                var location = new Location()
                 {
-                    location.Longitude = request.Coordinate?.Lng ?? 0;
-                    location.Latitude = request.Coordinate?.Lat ?? 0;
-                }
-                else
-                {
-                    location.Province = request.Province ?? string.Empty;
-                    location.City = request.City ?? string.Empty;
-                }
+                    IsPrecise = request.Coordinate != null,
+                    City = request.City ?? string.Empty,
+                    Province = request.Province ?? string.Empty,
+                    Longitude = request.Coordinate?.Lng ?? 0,
+                    Latitude = request.Coordinate?.Lat ?? 0
+                };
 
                 var apartment = new Apartment
                 {

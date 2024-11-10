@@ -26,7 +26,7 @@ namespace Rentful.Tests
                 Lat = 53.13213M,
                 Lng = 19.323M,
             };
-            var command = new AddAnnouncementUseCase.Command("test", 1, 2, 1, 2, 1, new List<string> { "test" }, false, false, false, false, false, "", coords, "city", "province", 1);
+            var command = new AddAnnouncementUseCase.Command("test", 1, 2, 1, 2, 1, new List<string> { "test" }, false, false, false, false, false, "", coords, null, null, 1);
             Repository.Users.Add(user);
             Repository.SaveChanges();
 
@@ -38,6 +38,7 @@ namespace Rentful.Tests
             Assert.Single(Repository.Announcements);
             Assert.NotNull(response);
         }
+
 
         [Fact]
         public async Task Should_AddAnnouncementWithThumbnailAsFirstImage()
@@ -92,6 +93,22 @@ namespace Rentful.Tests
                 Id = 1,
             };
             var command = new AddAnnouncementUseCase.Command("test", 1, 2, 1, 2, 1, new List<string>(), false, false, false, false, false, "", null, "city", "province", 1);
+            Repository.Users.Add(user);
+            Repository.SaveChanges();
+
+            // Act & Assert
+            await Assert.ThrowsAsync<HttpResponseException>(async () => await Mediator.Send(command));
+        }
+        [Fact]
+        public async Task When_LocationIsNull_Should_Throws_HttpResponseException()
+        {
+            // Arrange
+            var user = new User
+            {
+                Email = "test",
+                Id = 1,
+            };
+            var command = new AddAnnouncementUseCase.Command("test", 1, 2, 1, 2, 1, new List<string>() { "image" }, false, false, false, false, false, "", null, null, null, 1);
             Repository.Users.Add(user);
             Repository.SaveChanges();
 

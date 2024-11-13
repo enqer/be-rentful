@@ -60,12 +60,25 @@ namespace Rentful.Application.UseCases.Commands.NewApartment
 
                 var location = new Location()
                 {
-                    IsPrecise = request.Coordinate != null,
-                    City = request.City ?? string.Empty,
-                    Province = request.Province ?? string.Empty,
-                    Longitude = request.Coordinate?.Lng ?? 0,
-                    Latitude = request.Coordinate?.Lat ?? 0
+                    IsPrecise = request.Coordinate != null
                 };
+                if (location.IsPrecise)
+                {
+                    location.Longitude = request.Coordinate?.Lng ?? 0;
+                    location.Latitude = request.Coordinate?.Lat ?? 0;
+                }
+                else
+                {
+                    if (request.City?.Length > 0 && request.Province?.Length > 0)
+                    {
+                        var approximateLocation = repository.Locations.FirstOrDefault(x => x.City.Equals(request.City));
+                        location.Province = request.Province;
+                        location.City = request.City;
+                        location.Longitude = approximateLocation?.Longitude ?? 0;
+                        location.Latitude = approximateLocation?.Latitude ?? 0;
+                    }
+                }
+
 
                 var apartment = new Apartment
                 {

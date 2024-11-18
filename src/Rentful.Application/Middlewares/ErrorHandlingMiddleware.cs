@@ -19,6 +19,20 @@ namespace Rentful.Application.Middlewares
             {
                 await next.Invoke(context);
             }
+            catch (HttpResponseException ex)
+            {
+                context.Response.StatusCode = (int)ex.StatusCode;
+                context.Response.ContentType = "application/json";
+
+                var errorResponse = new
+                {
+                    status = ex.StatusCode,
+                    title = ex.Value.Title,
+                    description = ex.Value.Description
+                };
+
+                await context.Response.WriteAsJsonAsync(errorResponse);
+            }
             catch (NotFoundException notFound)
             {
                 context.Response.StatusCode = 404;

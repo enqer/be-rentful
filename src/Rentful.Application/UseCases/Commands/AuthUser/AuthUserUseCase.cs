@@ -36,10 +36,10 @@ namespace Rentful.Application.UseCases.Commands.LoginUser
                 var claims = new List<Claim>
                 {
                 new Claim(JwtRegisteredClaimNames.Sub, "rentful"),
-                new Claim("id", user.Id.ToString()),
+                new Claim("userId", user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim(JwtRegisteredClaimNames.GivenName, user.FirstName),
-                new Claim(JwtRegisteredClaimNames.FamilyName, user.LastName),
+                new Claim("firstName", user.FirstName),
+                new Claim("lastName", user.LastName),
                 };
                 var tokenDesc = new SecurityTokenDescriptor
                 {

@@ -13,8 +13,9 @@ builder.Services.AddSwaggerGen(options =>
     options.CustomSchemaIds(type => $"{type.Name}_{Guid.NewGuid()}");
 });
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-builder.Services.AddApplication();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplication();
 builder.Services.AddControllers();
 
 builder.ConfigureLogging();

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Rentful.Application.Common.Interfaces;
 using Rentful.Infrastructure.Persistence;
+using Rentful.Infrastructure.Services;
 
 namespace Rentful.Infrastructure
 {
@@ -16,6 +17,7 @@ namespace Rentful.Infrastructure
             {
                 options.UseNpgsql(connectionString);
             });
+            services.AddScoped<IUserResolver, UserResolver>();
             return services;
         }
         public static WebApplication ApplyMigrations(this WebApplication app)

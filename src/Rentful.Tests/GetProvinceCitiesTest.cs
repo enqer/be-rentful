@@ -6,7 +6,7 @@ namespace Rentful.Tests
     public class GetProvinceCitiesTest : BaseTest
     {
         [Fact]
-        public async Task When_UserDoesntExist_Should_Throws_HttpResponseException()
+        public async Task Should_ReturnListOfCitiesGroupedByProvince()
         {
             // Arrange
             var locations = new List<Location>
@@ -18,14 +18,14 @@ namespace Rentful.Tests
                     Province = "Lesser Poland",
                     IsPrecise = false,
                 },
-                 new Location
+                new Location
                 {
                     Id = 2,
                     City = "Tarnow",
                     Province = "Lesser Poland",
                     IsPrecise = false,
                 },
-                  new Location
+                new Location
                 {
                     Id = 3,
                     City = "Warsaw",

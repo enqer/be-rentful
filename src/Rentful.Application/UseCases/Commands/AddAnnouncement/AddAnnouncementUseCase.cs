@@ -26,17 +26,18 @@ namespace Rentful.Application.UseCases.Commands.NewApartment
             string Description,
             Coordinate? Coordinate,
             string? City,
-            string? Province,
-            int UserId
+            string? Province
             ) : IRequest<AddAnnouncementResponse>;
 
         internal class Handler : IRequestHandler<Command, AddAnnouncementResponse>
         {
             private readonly IRepository repository;
+            private readonly IUserResolver userResolver;
 
-            public Handler(IRepository repository)
+            public Handler(IRepository repository, IUserResolver userResolver)
             {
                 this.repository = repository;
+                this.userResolver = userResolver;
             }
 
             public async Task<AddAnnouncementResponse> Handle(Command request, CancellationToken cancellationToken)
@@ -55,8 +56,8 @@ namespace Rentful.Application.UseCases.Commands.NewApartment
                 {
                     throw new HttpResponseException(HttpStatusCode.BadRequest, "Błąd dodania oferty", "Ogłoszenie musi posiadać lokalizację");
                 }
-                var user = repository.Users.FirstOrDefault(x => x.Id == request.UserId)
-                   ?? throw new HttpResponseException(HttpStatusCode.NotFound, "Brak użytkownika", "Nie znaleziono użytkownika");
+                var user = repository.Users.FirstOrDefault(x => x.Id == userResolver.UserId)
+                   ?? throw new HttpResponseException(HttpStatusCode.NotFound, "Błąd użytkownika", "Nie znaleziono użytkownika");
 
                 var location = new Location()
                 {
@@ -79,7 +80,6 @@ namespace Rentful.Application.UseCases.Commands.NewApartment
                     }
                 }
 
-
                 var apartment = new Apartment
                 {
                     Area = request.Area,
@@ -95,7 +95,6 @@ namespace Rentful.Application.UseCases.Commands.NewApartment
                     Rent = request.Rent,
                     Location = location
                 };
-
 
                 var annoucement = new Announcement
                 {

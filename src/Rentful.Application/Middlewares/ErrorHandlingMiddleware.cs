@@ -43,7 +43,7 @@ namespace Rentful.Application.Middlewares
                 logger.LogError(ex, ex.Message);
 
                 context.Response.StatusCode = 500;
-                await context.Response.WriteAsync("Something went wrong");
+                await context.Response.WriteAsync(ex.Message);
             }
         }
     }

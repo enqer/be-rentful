@@ -6,7 +6,7 @@ namespace Rentful.Api.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class LocationController(IMediator mediator) : ControllerBase
+    public class LocationsController(IMediator mediator) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetProvinceCities()

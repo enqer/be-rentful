@@ -170,7 +170,7 @@ namespace Rentful.Infrastructure.Migrations
                     b.ToTable("apartments", "rentful");
                 });
 
-            modelBuilder.Entity("Rentful.Domain.Entities.Image", b =>
+            modelBuilder.Entity("Rentful.Domain.Entities.Images", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -313,7 +313,7 @@ namespace Rentful.Infrastructure.Migrations
                     b.Navigation("Location");
                 });
 
-            modelBuilder.Entity("Rentful.Domain.Entities.Image", b =>
+            modelBuilder.Entity("Rentful.Domain.Entities.Images", b =>
                 {
                     b.HasOne("Rentful.Domain.Entities.Apartment", "Apartment")
                         .WithMany("Images")

@@ -8,7 +8,7 @@ namespace Rentful.Api.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class IdentityController(IMediator mediator) : ControllerBase
+    public class IdentitiesController(IMediator mediator) : ControllerBase
     {
 
         [HttpPost("register")]

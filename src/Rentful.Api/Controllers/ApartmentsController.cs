@@ -4,7 +4,7 @@ namespace Rentful.Api.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class ApartmentController : ControllerBase
+    public class ApartmentsController : ControllerBase
     {
 
 

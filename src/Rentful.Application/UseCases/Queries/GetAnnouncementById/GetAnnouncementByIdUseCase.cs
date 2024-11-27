@@ -20,8 +20,10 @@ namespace Rentful.Application.UseCases.Queries.GetAnnouncementById
                     .ThenInclude(x => x.Images)
                     .Include(x => x.Apartment)
                     .ThenInclude(x => x.Images)
+                    .Include(x => x.User)
                     .FirstOrDefaultAsync(x => x.Id == request.AnnouncementId, cancellationToken)
                     ?? throw new HttpResponseException(HttpStatusCode.NotFound, "Błąd podczas pobierania oferty", "Nie znaleziono ogłoszenia");
+
                 var announcementDetails = new AnnouncementDetailsDto()
                 {
                     Id = announcement.Apartment.Id,

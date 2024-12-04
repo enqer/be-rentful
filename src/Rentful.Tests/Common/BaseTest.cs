@@ -6,8 +6,9 @@ using Moq;
 using Rentful.Application;
 using Rentful.Application.Common.Interfaces;
 using Rentful.Infrastructure;
+using Rentful.Tests.Common.Extensions;
 
-namespace Rentful.Tests
+namespace Rentful.Tests.Common
 {
     public abstract class BaseTest
     {

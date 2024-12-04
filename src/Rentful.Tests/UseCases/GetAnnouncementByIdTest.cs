@@ -2,7 +2,7 @@
 using Rentful.Domain.Entities;
 using Rentful.Domain.Exceptions;
 
-namespace Rentful.Tests
+namespace Rentful.Tests.UseCases
 {
     public class GetAnnouncementByIdTest : BaseTest
     {

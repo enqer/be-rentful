@@ -5,7 +5,7 @@ using Rentful.Application.UseCases.Commands.NewApartment.Dtos;
 using Rentful.Domain.Entities;
 using Rentful.Domain.Exceptions;
 
-namespace Rentful.Tests
+namespace Rentful.Tests.UseCases
 {
     public class AddAnnouncementTest : BaseTest
     {

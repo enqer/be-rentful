@@ -1,4 +1,6 @@
-﻿namespace Rentful.Tests
+﻿using Rentful.Tests.Common;
+
+namespace Rentful.Tests
 {
     public class HiTest : BaseTest
     {

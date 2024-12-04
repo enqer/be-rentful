@@ -10,7 +10,6 @@ namespace Rentful.Tests.Common.Handlers
     {
         public static string AuthenticationScheme = "TestScheme";
         public static string UserId = "UserId";
-        public static string Role = "UserId";
 
         public TestAuthHandler(IOptionsMonitor<AuthenticationSchemeOptions> options,
             ILoggerFactory logger, UrlEncoder encoder)
@@ -28,7 +27,6 @@ namespace Rentful.Tests.Common.Handlers
             }
 
             claims.Add(new Claim(ClaimTypes.NameIdentifier, user));
-            claims.AddRange(GetRoles());
             var identity = new ClaimsIdentity(claims, "Test");
             var principal = new ClaimsPrincipal(identity);
             var ticket = new AuthenticationTicket(principal, AuthenticationScheme);
@@ -47,15 +45,5 @@ namespace Rentful.Tests.Common.Handlers
             return null;
         }
 
-        private IEnumerable<Claim> GetRoles()
-        {
-            if (Context.Request.Headers.TryGetValue(Role, out var roles))
-            {
-                foreach (var role in roles)
-                {
-                    yield return new Claim(ClaimTypes.Role, role ?? string.Empty);
-                }
-            };
-        }
     }
 }

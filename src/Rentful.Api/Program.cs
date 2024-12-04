@@ -43,6 +43,8 @@ app.UseMiddleware<ValidationMiddleware>();
 
 app.MapControllers();
 
-app.ApplyMigrations();
+//app.ApplyMigrations();
 
 app.Run();
+
+public partial class Program { }

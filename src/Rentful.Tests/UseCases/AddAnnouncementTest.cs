@@ -4,6 +4,7 @@ using Rentful.Application.UseCases.Commands.NewApartment;
 using Rentful.Application.UseCases.Commands.NewApartment.Dtos;
 using Rentful.Domain.Entities;
 using Rentful.Domain.Exceptions;
+using Rentful.Tests.Common;
 
 namespace Rentful.Tests.UseCases
 {

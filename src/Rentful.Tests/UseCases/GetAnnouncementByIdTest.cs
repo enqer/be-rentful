@@ -1,6 +1,7 @@
 ﻿using Rentful.Application.UseCases.Queries.GetAnnouncementById;
 using Rentful.Domain.Entities;
 using Rentful.Domain.Exceptions;
+using Rentful.Tests.Common;
 
 namespace Rentful.Tests.UseCases
 {

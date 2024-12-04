@@ -3,8 +3,10 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Rentful.Application.Common.Interfaces;
 using Rentful.Application.UseCases.Commands.AuthUser.Dtos;
+using Rentful.Domain.Exceptions;
 using Rentful.Domain.Options;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 
@@ -20,15 +22,12 @@ namespace Rentful.Application.UseCases.Commands.LoginUser
 
             public async Task<AuthResponse> Handle(Command request, CancellationToken cancellationToken)
             {
-                var user = repository.Users.FirstOrDefault(x => x.Email == request.Email);
-                if (user == null)
-                {
-                    throw new Exception();
-                }
+                var user = repository.Users.FirstOrDefault(x => x.Email == request.Email)
+                    ?? throw new HttpResponseException(HttpStatusCode.NotFound, "Błąd użytkownika", "Nie znaleziono użytkownika");
                 var isPasswordCorrect = BCrypt.Net.BCrypt.Verify(request.Password, user.Password);
                 if (!isPasswordCorrect)
                 {
-                    throw new Exception();
+                    throw new HttpResponseException(HttpStatusCode.BadRequest, "Błąd logowania", "Nie prawidłowe hasło");
                 }
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.UTF8.GetBytes(jwtSettings.Key);

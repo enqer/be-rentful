@@ -1,5 +1,6 @@
 ﻿using Rentful.Application.UseCases.Queries.GetLocationsProvince;
 using Rentful.Domain.Entities;
+using Rentful.Tests.Common;
 
 namespace Rentful.Tests.UseCases
 {

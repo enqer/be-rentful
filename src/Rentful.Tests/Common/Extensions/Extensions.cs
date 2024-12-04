@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Rentful.Application.Common.Interfaces;
 using Rentful.Infrastructure.Persistence;
 
-namespace Rentful.Tests
+namespace Rentful.Tests.Common.Extensions
 {
     internal static class Extensions
     {

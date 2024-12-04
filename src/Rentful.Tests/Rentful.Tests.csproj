@@ -12,6 +12,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.7" />
 	<PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.10" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
+	<PackageReference Include="System.Net.Http.Json" Version="8.0.1" />
     <PackageReference Include="Moq" Version="4.20.70" />
     <PackageReference Include="xunit" Version="2.9.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
@@ -23,10 +24,11 @@
   <ItemGroup>
     <ProjectReference Include="..\Rentful.Application\Rentful.Application.csproj" />
     <ProjectReference Include="..\Rentful.Infrastructure\Rentful.Infrastructure.csproj" />
+    <ProjectReference Include="..\Rentful.Api\Rentful.Api.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\Identities\Factories\" />
+	  <Using Include="Xunit" />
   </ItemGroup>
 
 </Project>

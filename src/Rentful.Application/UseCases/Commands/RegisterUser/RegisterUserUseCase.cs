@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Rentful.Application.Common.Interfaces;
 using Rentful.Domain.Entities;
+using Rentful.Domain.Exceptions;
+using System.Net;
 
 namespace Rentful.Application.UseCases.Commands.RegisterUser
 {
@@ -19,12 +21,11 @@ namespace Rentful.Application.UseCases.Commands.RegisterUser
 
             public async Task Handle(Command request, CancellationToken cancellationToken)
             {
-                var isNewUser = repository.Users.Any(x => x.Email == request.Email);
-                if (isNewUser)
+                var isUserAlreadyExist = repository.Users.Any(x => x.Email == request.Email);
+                if (isUserAlreadyExist)
                 {
-                    throw new HttpRequestException("This email is taken!");
+                    throw new HttpResponseException(HttpStatusCode.BadRequest, "Błąd rejestracji", "Użytkownik już istnieje");
                 }
-
                 var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.Password);
                 var user = new User()
                 {
@@ -34,7 +35,7 @@ namespace Rentful.Application.UseCases.Commands.RegisterUser
                     Password = hashedPassword
                 };
                 repository.Users.Add(user);
-                await repository.SaveChangesAsync();
+                await repository.SaveChangesAsync(cancellationToken);
             }
         }
     }

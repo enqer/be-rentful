@@ -23,7 +23,8 @@ namespace Rentful.Application.UseCases.Queries.GetAnnouncements
                     .Announcements
                     .Include(x => x.Apartment)
                     .ThenInclude(x => x.Location)
-                    .Include(x => x.Apartment.Images)
+                    .Include(x => x.Apartment)
+                    .ThenInclude(x => x.Images)
                     .ToList();
 
                 var announcementsConverted = announcements.Select(x =>
@@ -38,7 +39,7 @@ namespace Rentful.Application.UseCases.Queries.GetAnnouncements
                         HasBalcony = x.Apartment.HasBalcony,
                         HasElevator = x.Apartment.HasElevator,
                         HasParkingSpace = x.Apartment.HasParkingSpace,
-                        Image = x.Apartment.Images.First(x => x.IsThumbnail).Source,
+                        Image = x.Apartment.Images.FirstOrDefault(x => x.IsThumbnail)?.Source ?? string.Empty,
                         IsAnimalFriendly = x.Apartment.IsAnimalFriendly,
                         IsFurnished = x.Apartment.IsFurnished,
                         NumberOfRooms = x.Apartment.NumberOfRooms,

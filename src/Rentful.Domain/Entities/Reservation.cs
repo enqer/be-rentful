@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Rentful.Domain.Entities.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Rentful.Domain.Entities
 {
@@ -12,8 +13,8 @@ namespace Rentful.Domain.Entities
         public string Date { get; set; } = string.Empty;
         [Column("time")]
         public string Time { get; set; } = string.Empty;
-        [Column("is_approved")]
-        public bool IsApproved { get; set; }
+        [Column("status")]
+        public ReservationStatusEnum Status { get; set; }
         [Column("user_id")]
         public int UserId { get; set; }
         public User User { get; set; } = new User();

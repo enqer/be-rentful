@@ -26,7 +26,8 @@ namespace Rentful.Application.UseCases.Commands.NewApartment
             string Description,
             Coordinate? Coordinate,
             string? City,
-            string? Province
+            string? Province,
+            List<string> Reservations
             ) : IRequest<AddAnnouncementResponse>;
 
         internal class Handler : IRequestHandler<Command, AddAnnouncementResponse>

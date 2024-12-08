@@ -21,5 +21,8 @@ namespace Rentful.Domain.Entities
         [Column("user_id")]
         public int UserId { get; set; }
         public User User { get; set; } = new User();
+
+        public List<Reservation> Reservations { get; set; } = new List<Reservation>();
+
     }
 }

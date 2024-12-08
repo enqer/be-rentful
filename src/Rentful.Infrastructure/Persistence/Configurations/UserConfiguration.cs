@@ -13,6 +13,11 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .WithOne()
             .HasForeignKey<User>(u => u.AddressId)
             .OnDelete(DeleteBehavior.Cascade);
+        builder
+            .HasMany(x => x.Reservations)
+            .WithOne()
+            .HasForeignKey(x => x.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder
             .HasMany(x => x.Announcements)

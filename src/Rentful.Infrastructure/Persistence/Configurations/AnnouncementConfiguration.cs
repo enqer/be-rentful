@@ -14,6 +14,11 @@ public class AnnouncementConfiguration : IEntityTypeConfiguration<Announcement>
            .HasForeignKey<Announcement>(x => x.ApartmentId)
            .OnDelete(DeleteBehavior.Cascade);
         builder
+            .HasMany(x => x.Reservations)
+            .WithOne()
+            .HasForeignKey(x => x.AnnouncementId)
+            .OnDelete(DeleteBehavior.Cascade);
+        builder
             .Property(u => u.Title)
             .HasMaxLength(100)
             .IsRequired();

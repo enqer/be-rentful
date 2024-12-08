@@ -23,6 +23,7 @@ namespace Rentful.Domain.Entities
         public int? AddressId { get; set; }
         public Address Address { get; set; } = new Address();
         public List<Announcement> Announcements { get; set; } = new List<Announcement>();
+        public List<Reservation> Reservations { get; set; } = new List<Reservation>();
 
     }
 }

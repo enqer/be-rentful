@@ -19,7 +19,7 @@ namespace Rentful.Application.UseCases.Queries.GetAnnouncementById
                     .Include(x => x.Apartment)
                     .ThenInclude(x => x.Images)
                     .Include(x => x.Apartment)
-                    .ThenInclude(x => x.Images)
+                    .ThenInclude(x => x.Location)
                     .Include(x => x.User)
                     .FirstOrDefaultAsync(x => x.Id == request.AnnouncementId, cancellationToken)
                     ?? throw new HttpResponseException(HttpStatusCode.NotFound, "Błąd podczas pobierania oferty", "Nie znaleziono ogłoszenia");
@@ -37,7 +37,7 @@ namespace Rentful.Application.UseCases.Queries.GetAnnouncementById
                     HasBalcony = announcement.Apartment.HasBalcony,
                     HasElevator = announcement.Apartment.HasElevator,
                     HasParkingSpace = announcement.Apartment.HasParkingSpace,
-                    Images = announcement.Apartment.Images.OrderBy(x => x.IsThumbnail).Select(x => x.Source).ToList(),
+                    Images = announcement.Apartment.Images.OrderByDescending(x => x.IsThumbnail).Select(x => x.Source).ToList(),
                     IsAnimalFriendly = announcement.Apartment.IsAnimalFriendly,
                     IsFurnished = announcement.Apartment.IsFurnished,
                     NumberOfRooms = announcement.Apartment.NumberOfRooms,

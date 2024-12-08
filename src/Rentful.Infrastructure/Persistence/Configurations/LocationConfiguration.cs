@@ -14,6 +14,9 @@ public class LocationConfiguration : IEntityTypeConfiguration<Location>
         builder
             .Property(u => u.Longitude)
             .IsRequired();
+        builder
+            .Property(x => x.PostalCode)
+            .HasMaxLength(6);
 
     }
 }

@@ -43,6 +43,87 @@ namespace Rentful.Tests.UseCases
             Assert.NotNull(response);
         }
 
+        [Fact]
+        public async Task When_CityIsMissing_Should_AddNewAnnouncementWithClosestCity()
+        {
+            // Arrange
+            var user = new User
+            {
+                Email = "test",
+                Id = 1,
+            };
+            var coords = new Coordinate
+            {
+                Lat = 53.13213M,
+                Lng = 21.323M,
+            };
+            var locations = new List<Location>()
+            {
+                new Location()
+                {
+                    City = "Warszawa",
+                    Id = 1,
+                    Latitude = 52.237049M,
+                    Longitude = 21.017532M,
+                    Province = "Mazowieckie"
+                },
+                new Location()
+                {
+                    City = "Kraków",
+                    Id = 2,
+                    Latitude = 50.049683M,
+                    Longitude = 19.944544M,
+                    Province = "Małopolskie"
+                }
+            };
+            var command = new AddAnnouncementUseCase.Command("test", 1, 2, 1, 2, 1, new List<string> { "test" }, false, false, false, false, false, "", coords, null, null);
+            Repository.Users.Add(user);
+            Repository.Locations.AddRange(locations);
+            Repository.SaveChanges();
+
+            // Act
+            var response = await Mediator.Send(command);
+
+            // Assert
+            var announcement = Assert.Single(Repository.Announcements);
+            Assert.NotNull(response);
+            Assert.Equal("Warszawa", announcement.Apartment.Location.City);
+        }
+
+        [Fact]
+        public async Task When_CityCoordsAreMissing_Should_AddNewAnnouncementWithCoordsByCity()
+        {
+            // Arrange
+            var user = new User
+            {
+                Email = "test",
+                Id = 1,
+            };
+            var locations = new List<Location>()
+            {
+                new Location()
+                {
+                    City = "Warszawa",
+                    Id = 1,
+                    Latitude = 52.237049M,
+                    Longitude = 21.017532M,
+                    Province = "Mazowieckie"
+                }
+            };
+            var command = new AddAnnouncementUseCase.Command("test", 1, 2, 1, 2, 1, new List<string> { "test" }, false, false, false, false, false, "", null, "Warszawa", "Mazowieckie");
+            Repository.Users.Add(user);
+            Repository.Locations.AddRange(locations);
+            Repository.SaveChanges();
+
+            // Act
+            var response = await Mediator.Send(command);
+
+            // Assert
+            var announcement = Assert.Single(Repository.Announcements);
+            Assert.NotNull(response);
+            Assert.Equal(52.237049M, announcement.Apartment.Location.Latitude);
+        }
+
 
         [Fact]
         public async Task Should_AddAnnouncementWithThumbnailAsFirstImage()

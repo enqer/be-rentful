@@ -20,6 +20,9 @@ namespace Rentful.Domain.Entities
         [Column("city")]
         public string City { get; set; } = string.Empty;
 
+        [Column("postal_code")]
+        public string PostalCode { get; set; } = string.Empty;
+
         [Column("is_precise")]
         public bool IsPrecise { get; set; }
 

@@ -67,6 +67,36 @@ namespace Rentful.Application.UseCases.Commands.NewApartment
                     Longitude = request?.Coordinate?.Lng ?? 0,
                     IsPrecise = request?.City == null && request?.Coordinate != null
                 };
+                if ((request?.Province ?? string.Empty).Length <= 0 && request.Coordinate?.Lat > 0 && request.Coordinate?.Lng > 0)
+                {
+                    var closestCity = repository.Locations
+                       .Where(x => x.Latitude != 0 && x.Longitude != 0)
+                       .ToList()
+                       .Select(x => new
+                       {
+                           Location = x,
+                           Distance = GetDistance((double)request.Coordinate.Lat, (double)request.Coordinate.Lng, (double)x.Latitude, (double)x.Longitude)
+                       })
+                       .OrderBy(x => x.Distance)
+                       .FirstOrDefault()?.Location;
+                    if (closestCity != null)
+                    {
+                        location.Province = closestCity.Province;
+                        location.City = closestCity.City;
+
+                    }
+
+                }
+                else if ((request?.Coordinate?.Lat ?? 0) == 0 || (request?.Coordinate?.Lng ?? 0) == 0)
+                {
+                    var similarLocation = repository.Locations.FirstOrDefault(x => x.City == request.City);
+                    if (similarLocation != null)
+                    {
+                        location.Longitude = similarLocation.Longitude;
+                        location.Latitude = similarLocation.Latitude;
+                    }
+
+                }
 
                 var apartment = new Apartment
                 {
@@ -98,6 +128,25 @@ namespace Rentful.Application.UseCases.Commands.NewApartment
                 {
                     AnnouncementId = annoucement.Id
                 };
+            }
+            private double GetDistance(double lat1, double lng1, double lat2, double lng2)
+            {
+                const double EarthRadiusKm = 6371;
+
+                var dLat = DegreesToRadians(lat2 - lat1);
+                var dLng = DegreesToRadians(lng2 - lng1);
+
+                var a = Math.Sin((dLat / 2)) * Math.Sin((dLat / 2)) +
+                            Math.Cos(DegreesToRadians(lat1)) * Math.Cos(DegreesToRadians(lat2)) *
+                            Math.Sin((dLng / 2)) * Math.Sin((dLng / 2));
+
+                var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt((1 - a)));
+                return EarthRadiusKm * c;
+            }
+
+            private double DegreesToRadians(double degrees)
+            {
+                return degrees * Math.PI / 180;
             }
         }
     }

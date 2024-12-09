@@ -2,8 +2,9 @@
 {
     public enum RoleEnum
     {
-        Resolved = 1,
-        Unresolved = 2,
-        InProgress = 3,
+        User = 1,
+        Administrator = 2,
+        Owner = 3,
+        Renter = 4,
     }
 }

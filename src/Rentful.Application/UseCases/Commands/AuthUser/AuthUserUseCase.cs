@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Rentful.Application.Common.Interfaces;
 using Rentful.Application.UseCases.Commands.AuthUser.Dtos;
+using Rentful.Domain.Entities;
 using Rentful.Domain.Exceptions;
 using Rentful.Domain.Options;
 using System.IdentityModel.Tokens.Jwt;
@@ -40,6 +41,8 @@ namespace Rentful.Application.UseCases.Commands.LoginUser
                 new Claim("firstName", user.FirstName),
                 new Claim("lastName", user.LastName),
                 };
+                user.Roles.ForEach(x => claims.Add(new Claim(ClaimTypes.Role, x.Name)));
+
                 var tokenDesc = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(claims),

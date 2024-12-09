@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Rentful.Application.Common.Interfaces;
+using Rentful.Domain.ConstantValues;
 using Rentful.Domain.Entities;
+using Rentful.Domain.Entities.Enums;
 using Rentful.Domain.Exceptions;
 using System.Net;
 
@@ -32,7 +34,15 @@ namespace Rentful.Application.UseCases.Commands.RegisterUser
                     Email = request.Email,
                     FirstName = request.FirstName,
                     LastName = request.LastName,
-                    Password = hashedPassword
+                    Password = hashedPassword,
+                    Roles = new List<Role>()
+                    {
+                        new Role
+                        {
+                            Name = RoleName.User,
+                            Type = RoleEnum.User
+                        }
+                    }
                 };
                 repository.Users.Add(user);
                 await repository.SaveChangesAsync(cancellationToken);

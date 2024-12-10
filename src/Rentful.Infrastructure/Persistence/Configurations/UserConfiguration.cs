@@ -15,9 +15,14 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .OnDelete(DeleteBehavior.Cascade);
         builder
             .HasMany(x => x.Reservations)
-            .WithOne()
+            .WithOne(x => x.User)
             .HasForeignKey(x => x.UserId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder
+            .HasMany(x => x.Roles)
+            .WithMany(x => x.Users)
+            .UsingEntity(j => j.ToTable("user_roles"));
 
         builder
             .HasMany(x => x.Announcements)

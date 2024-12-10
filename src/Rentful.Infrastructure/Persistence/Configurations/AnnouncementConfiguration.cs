@@ -15,7 +15,7 @@ public class AnnouncementConfiguration : IEntityTypeConfiguration<Announcement>
            .OnDelete(DeleteBehavior.Cascade);
         builder
             .HasMany(x => x.Reservations)
-            .WithOne()
+            .WithOne(x => x.Announcement)
             .HasForeignKey(x => x.AnnouncementId)
             .OnDelete(DeleteBehavior.Cascade);
         builder
@@ -24,7 +24,7 @@ public class AnnouncementConfiguration : IEntityTypeConfiguration<Announcement>
             .IsRequired();
         builder
             .Property(u => u.Description)
-            .HasMaxLength(300)
+            .HasMaxLength(500)
             .IsRequired();
         builder
             .Property(u => u.DateAdded)

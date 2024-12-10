@@ -1,5 +1,4 @@
-﻿using Rentful.Domain.ConstantValues;
-using Rentful.Domain.Entities.Enums;
+﻿using Rentful.Domain.Entities.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Rentful.Domain.Entities
@@ -16,6 +15,7 @@ namespace Rentful.Domain.Entities
         [Column("name")]
         public string Name { get; set; } = string.Empty;
 
+        public List<User> Users { get; set; } = new List<User>();
 
     }
 }

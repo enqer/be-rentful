@@ -10,6 +10,9 @@ namespace Rentful.Infrastructure.Persistence
 
         public RentfulDbContext(DbContextOptions<RentfulDbContext> options) : base(options) { }
 
+        public DbSet<Reservation> Reservations => Set<Reservation>();
+
+        public DbSet<Role> Roles => Set<Role>();
         public DbSet<User> Users => Set<User>();
         public DbSet<Address> Addresses => Set<Address>();
         public DbSet<Image> Images => Set<Image>();

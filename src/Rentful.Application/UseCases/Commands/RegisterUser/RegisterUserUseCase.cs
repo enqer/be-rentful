@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Rentful.Application.Common.Interfaces;
-using Rentful.Domain.ConstantValues;
 using Rentful.Domain.Entities;
 using Rentful.Domain.Entities.Enums;
 using Rentful.Domain.Exceptions;
@@ -29,6 +28,7 @@ namespace Rentful.Application.UseCases.Commands.RegisterUser
                     throw new HttpResponseException(HttpStatusCode.BadRequest, "Błąd rejestracji", "Użytkownik już istnieje");
                 }
                 var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.Password);
+                var defaultRole = repository.Roles.First(x => x.Type == RoleEnum.User);
                 var user = new User()
                 {
                     Email = request.Email,
@@ -37,11 +37,7 @@ namespace Rentful.Application.UseCases.Commands.RegisterUser
                     Password = hashedPassword,
                     Roles = new List<Role>()
                     {
-                        new Role
-                        {
-                            Name = RoleName.User,
-                            Type = RoleEnum.User
-                        }
+                        defaultRole
                     }
                 };
                 repository.Users.Add(user);

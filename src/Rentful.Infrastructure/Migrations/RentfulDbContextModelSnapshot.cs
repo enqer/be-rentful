@@ -85,8 +85,8 @@ namespace Rentful.Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("character varying(300)")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)")
                         .HasColumnName("description");
 
                     b.Property<string>("Title")
@@ -241,6 +241,69 @@ namespace Rentful.Infrastructure.Migrations
                     b.ToTable("locations", "rentful");
                 });
 
+            modelBuilder.Entity("Rentful.Domain.Entities.Reservation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AnnouncementId")
+                        .HasColumnType("integer")
+                        .HasColumnName("announcement_id");
+
+                    b.Property<string>("Date")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("date");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
+
+                    b.Property<string>("Time")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("time");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnnouncementId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("reservations", "rentful");
+                });
+
+            modelBuilder.Entity("Rentful.Domain.Entities.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer")
+                        .HasColumnName("type");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("roles", "rentful");
+                });
+
             modelBuilder.Entity("Rentful.Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -290,6 +353,21 @@ namespace Rentful.Infrastructure.Migrations
                     b.ToTable("users", "rentful");
                 });
 
+            modelBuilder.Entity("RoleUser", b =>
+                {
+                    b.Property<int>("RolesId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UsersId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("RolesId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("user_roles", "rentful");
+                });
+
             modelBuilder.Entity("Rentful.Domain.Entities.Announcement", b =>
                 {
                     b.HasOne("Rentful.Domain.Entities.Apartment", "Apartment")
@@ -330,6 +408,25 @@ namespace Rentful.Infrastructure.Migrations
                     b.Navigation("Apartment");
                 });
 
+            modelBuilder.Entity("Rentful.Domain.Entities.Reservation", b =>
+                {
+                    b.HasOne("Rentful.Domain.Entities.Announcement", "Announcement")
+                        .WithMany("Reservations")
+                        .HasForeignKey("AnnouncementId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Rentful.Domain.Entities.User", "User")
+                        .WithMany("Reservations")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Announcement");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Rentful.Domain.Entities.User", b =>
                 {
                     b.HasOne("Rentful.Domain.Entities.Address", "Address")
@@ -340,6 +437,26 @@ namespace Rentful.Infrastructure.Migrations
                     b.Navigation("Address");
                 });
 
+            modelBuilder.Entity("RoleUser", b =>
+                {
+                    b.HasOne("Rentful.Domain.Entities.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RolesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Rentful.Domain.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Rentful.Domain.Entities.Announcement", b =>
+                {
+                    b.Navigation("Reservations");
+                });
+
             modelBuilder.Entity("Rentful.Domain.Entities.Apartment", b =>
                 {
                     b.Navigation("Images");
@@ -348,6 +465,8 @@ namespace Rentful.Infrastructure.Migrations
             modelBuilder.Entity("Rentful.Domain.Entities.User", b =>
                 {
                     b.Navigation("Announcements");
+
+                    b.Navigation("Reservations");
                 });
 #pragma warning restore 612, 618
         }

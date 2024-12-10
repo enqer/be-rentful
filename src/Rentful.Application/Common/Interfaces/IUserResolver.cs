@@ -5,5 +5,6 @@
         int UserId { get; }
         string FirstName { get; }
         string LastName { get; }
+        List<string> Roles { get; }
     }
 }

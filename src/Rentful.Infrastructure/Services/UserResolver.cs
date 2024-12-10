@@ -19,5 +19,7 @@ namespace Rentful.Infrastructure.Services
         public int UserId => Int32.Parse(claimsPrincipal?.FindFirst("userId")?.Value ?? throw new NullReferenceException(nameof(UserId)));
         public string FirstName => claimsPrincipal?.FindFirst("firstName")?.Value ?? "";
         public string LastName => claimsPrincipal?.FindFirst("lastName")?.Value ?? "";
+
+        public List<string> Roles => claimsPrincipal?.FindAll("roles").Select(x => x.Value).ToList() ?? new List<string>();
     }
 }

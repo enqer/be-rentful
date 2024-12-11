@@ -3,6 +3,7 @@ using Rentful.Application.Common.Interfaces;
 using Rentful.Application.UseCases.Commands.AddAnnouncement.Dtos;
 using Rentful.Application.UseCases.Commands.NewApartment.Dtos;
 using Rentful.Domain.Entities;
+using Rentful.Domain.Entities.Enums;
 using Rentful.Domain.Exceptions;
 using System.Net;
 
@@ -26,7 +27,8 @@ namespace Rentful.Application.UseCases.Commands.NewApartment
             string Description,
             Coordinate? Coordinate,
             string? City,
-            string? Province
+            string? Province,
+            List<string>? Reservations
             ) : IRequest<AddAnnouncementResponse>;
 
         internal class Handler : IRequestHandler<Command, AddAnnouncementResponse>
@@ -67,7 +69,7 @@ namespace Rentful.Application.UseCases.Commands.NewApartment
                     Longitude = request?.Coordinate?.Lng ?? 0,
                     IsPrecise = request?.City == null && request?.Coordinate != null
                 };
-                if ((request?.Province ?? string.Empty).Length <= 0 && request.Coordinate?.Lat > 0 && request.Coordinate?.Lng > 0)
+                if ((request?.Province ?? string.Empty).Length <= 0 && request?.Coordinate?.Lat > 0 && request.Coordinate?.Lng > 0)
                 {
                     var closestCity = repository.Locations
                        .Where(x => x.Latitude != 0 && x.Longitude != 0)
@@ -89,7 +91,7 @@ namespace Rentful.Application.UseCases.Commands.NewApartment
                 }
                 else if ((request?.Coordinate?.Lat ?? 0) == 0 || (request?.Coordinate?.Lng ?? 0) == 0)
                 {
-                    var similarLocation = repository.Locations.FirstOrDefault(x => x.City == request.City);
+                    var similarLocation = repository.Locations.FirstOrDefault(x => x.City == request!.City);
                     if (similarLocation != null)
                     {
                         location.Longitude = similarLocation.Longitude;
@@ -111,8 +113,14 @@ namespace Rentful.Application.UseCases.Commands.NewApartment
                     NumberOfRooms = request.NumberOfRooms,
                     Price = request.Price,
                     Rent = request.Rent,
-                    Location = location
+                    Location = location,
                 };
+
+                var reservations = request.Reservations?.ConvertAll(x => new Reservation
+                {
+                    Date = x,
+                    Status = ReservationStatusEnum.Unresolved
+                }) ?? [];
 
                 var annoucement = new Announcement
                 {
@@ -121,8 +129,10 @@ namespace Rentful.Application.UseCases.Commands.NewApartment
                     Description = request.Description,
                     Title = request.Title,
                     User = user,
+                    Reservations = reservations
                 };
                 repository.Announcements.Add(annoucement);
+
                 await repository.SaveChangesAsync(cancellationToken);
                 return new AddAnnouncementResponse
                 {

@@ -31,7 +31,7 @@ namespace Rentful.Tests.UseCases
                 Lat = 53.13213M,
                 Lng = 19.323M,
             };
-            var command = new AddAnnouncementUseCase.Command("test", 1, 2, 1, 2, 1, new List<string> { "test" }, false, false, false, false, false, "", coords, null, null);
+            var command = new AddAnnouncementUseCase.Command("test", 1, 2, 1, 2, 1, new List<string> { "test" }, false, false, false, false, false, "", coords, null, null, null);
             Repository.Users.Add(user);
             Repository.SaveChanges();
 
@@ -76,7 +76,7 @@ namespace Rentful.Tests.UseCases
                     Province = "Małopolskie"
                 }
             };
-            var command = new AddAnnouncementUseCase.Command("test", 1, 2, 1, 2, 1, new List<string> { "test" }, false, false, false, false, false, "", coords, null, null);
+            var command = new AddAnnouncementUseCase.Command("test", 1, 2, 1, 2, 1, new List<string> { "test" }, false, false, false, false, false, "", coords, null, null, null);
             Repository.Users.Add(user);
             Repository.Locations.AddRange(locations);
             Repository.SaveChanges();
@@ -110,7 +110,7 @@ namespace Rentful.Tests.UseCases
                     Province = "Mazowieckie"
                 }
             };
-            var command = new AddAnnouncementUseCase.Command("test", 1, 2, 1, 2, 1, new List<string> { "test" }, false, false, false, false, false, "", null, "Warszawa", "Mazowieckie");
+            var command = new AddAnnouncementUseCase.Command("test", 1, 2, 1, 2, 1, new List<string> { "test" }, false, false, false, false, false, "", null, "Warszawa", "Mazowieckie", null);
             Repository.Users.Add(user);
             Repository.Locations.AddRange(locations);
             Repository.SaveChanges();
@@ -139,7 +139,8 @@ namespace Rentful.Tests.UseCases
                 Lat = 53.13213M,
                 Lng = 19.323M,
             };
-            var command = new AddAnnouncementUseCase.Command("test", 1, 2, 1, 2, 1, new List<string> { "test1", "test2", "test3" }, false, false, false, false, false, "", coords, "city", "province");
+            var reservations = new List<string>() { "12.12.2024 12:12" };
+            var command = new AddAnnouncementUseCase.Command("test", 1, 2, 1, 2, 1, new List<string> { "test1", "test2", "test3" }, false, false, false, false, false, "", coords, "city", "province", reservations);
             Repository.Users.Add(user);
             Repository.SaveChanges();
 
@@ -162,7 +163,8 @@ namespace Rentful.Tests.UseCases
                 Lat = 53.13213M,
                 Lng = 19.323M,
             };
-            var command = new AddAnnouncementUseCase.Command("test", 1, 2, 1, 2, 1, new List<string> { "test" }, false, false, false, false, false, "", coords, "city", "province");
+            var reservations = new List<string>() { "12.12.2024 12:12" };
+            var command = new AddAnnouncementUseCase.Command("test", 1, 2, 1, 2, 1, new List<string> { "test" }, false, false, false, false, false, "", coords, "city", "province", reservations);
 
             // Act & Assert
             await Assert.ThrowsAsync<HttpResponseException>(async () => await Mediator.Send(command));
@@ -177,7 +179,7 @@ namespace Rentful.Tests.UseCases
                 Email = "test",
                 Id = 1,
             };
-            var command = new AddAnnouncementUseCase.Command("test", 1, 2, 1, 2, 1, new List<string>(), false, false, false, false, false, "", null, "city", "province");
+            var command = new AddAnnouncementUseCase.Command("test", 1, 2, 1, 2, 1, new List<string>(), false, false, false, false, false, "", null, "city", "province", null);
             Repository.Users.Add(user);
             Repository.SaveChanges();
 
@@ -193,7 +195,7 @@ namespace Rentful.Tests.UseCases
                 Email = "test",
                 Id = 1,
             };
-            var command = new AddAnnouncementUseCase.Command("test", 1, 2, 1, 2, 1, new List<string>() { "image" }, false, false, false, false, false, "", null, null, null);
+            var command = new AddAnnouncementUseCase.Command("test", 1, 2, 1, 2, 1, new List<string>() { "image" }, false, false, false, false, false, "", null, null, null, null);
             Repository.Users.Add(user);
             Repository.SaveChanges();
 

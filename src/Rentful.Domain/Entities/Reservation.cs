@@ -11,13 +11,11 @@ namespace Rentful.Domain.Entities
 
         [Column("date")]
         public string Date { get; set; } = string.Empty;
-        [Column("time")]
-        public string Time { get; set; } = string.Empty;
         [Column("status")]
         public ReservationStatusEnum Status { get; set; }
         [Column("user_id")]
-        public int UserId { get; set; }
-        public User User { get; set; } = new User();
+        public int? UserId { get; set; }
+        public User? User { get; set; } = new User();
 
         [Column("announcement_id")]
         public int AnnouncementId { get; set; }

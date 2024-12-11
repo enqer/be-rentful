@@ -14,10 +14,6 @@ namespace Rentful.Infrastructure.Persistence.Configurations
                 .Property(u => u.Date)
                 .IsRequired();
 
-            builder
-                .Property(u => u.Time)
-                .IsRequired();
-
         }
     }
 }

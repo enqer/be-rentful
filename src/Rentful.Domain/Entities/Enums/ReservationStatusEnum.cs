@@ -2,8 +2,9 @@
 {
     public enum ReservationStatusEnum
     {
-        Unresolved = 0,
-        Unapproved = 1,
-        Approved = 2
+        Available = 0,
+        Unresolved = 1,
+        Unapproved = 2,
+        Approved = 3
     }
 }

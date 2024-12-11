@@ -119,7 +119,8 @@ namespace Rentful.Application.UseCases.Commands.NewApartment
                 var reservations = request.Reservations?.ConvertAll(x => new Reservation
                 {
                     Date = x,
-                    Status = ReservationStatusEnum.Unresolved
+                    Status = ReservationStatusEnum.Available,
+                    User = null
                 }) ?? [];
 
                 var annoucement = new Announcement

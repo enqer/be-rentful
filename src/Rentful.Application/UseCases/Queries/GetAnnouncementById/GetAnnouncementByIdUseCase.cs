@@ -54,7 +54,7 @@ namespace Rentful.Application.UseCases.Queries.GetAnnouncementById
                     TelephoneNumber = announcement.User.TelephoneNumber ?? string.Empty,
                     UserId = announcement.User.Id,
                     Reservations = announcement.Reservations
-                        .Where(x => x.Status != ReservationStatusEnum.Approved)
+                        .Where(x => x.Status == ReservationStatusEnum.Available)
                         .Select(x => new ReservationDto
                         {
                             Id = x.Id,

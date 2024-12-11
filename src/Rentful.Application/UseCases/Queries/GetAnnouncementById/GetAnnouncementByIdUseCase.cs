@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Rentful.Application.Common.Interfaces;
 using Rentful.Application.UseCases.Queries.GetAnnouncementById.Dtos;
+using Rentful.Domain.Entities.Enums;
 using Rentful.Domain.Exceptions;
 using System.Net;
 
@@ -21,6 +22,7 @@ namespace Rentful.Application.UseCases.Queries.GetAnnouncementById
                     .Include(x => x.Apartment)
                     .ThenInclude(x => x.Location)
                     .Include(x => x.User)
+                    .Include(x => x.Reservations)
                     .FirstOrDefaultAsync(x => x.Id == request.AnnouncementId, cancellationToken)
                     ?? throw new HttpResponseException(HttpStatusCode.NotFound, "Błąd podczas pobierania oferty", "Nie znaleziono ogłoszenia");
 
@@ -50,19 +52,16 @@ namespace Rentful.Application.UseCases.Queries.GetAnnouncementById
                     LastName = announcement.User.LastName,
                     Email = announcement.User.Email,
                     TelephoneNumber = announcement.User.TelephoneNumber ?? string.Empty,
-                    UserId = announcement.User.Id
+                    UserId = announcement.User.Id,
+                    Reservations = announcement.Reservations
+                        .Where(x => x.Status != ReservationStatusEnum.Approved)
+                        .Select(x => new ReservationDto
+                        {
+                            Id = x.Id,
+                            Date = x.Date
+                        })
+                        .ToList(),
                 };
-
-                if (announcementDetails.Longitude == 0)
-                {
-                    var nearbyLocation = repository.Locations.FirstOrDefault(x => x.City == announcementDetails.City);
-                    if (nearbyLocation != null)
-                    {
-                        announcementDetails.Longitude = nearbyLocation.Longitude;
-                        announcementDetails.Latitude = nearbyLocation.Latitude;
-                        announcementDetails.IsPrecise = false;
-                    }
-                }
                 return announcementDetails;
             }
         }

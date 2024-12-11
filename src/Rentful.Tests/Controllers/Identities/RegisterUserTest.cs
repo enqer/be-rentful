@@ -35,10 +35,29 @@ namespace Rentful.Tests.Controllers.Identities
         }
 
         [Fact]
-        public async Task When_UserDoesntExist_Should_RegisterUserAndReturnOkStatusCode()
+        public async Task When_DefaultRoleDoesntExist_Should_RegisterReturnBadRequest()
         {
             // Arrange
             var client = factory.CreateClient();
+            var itemParameterClient = new IdentitiesClient(client);
+            var command = new RegisterUserUseCase.Command("Rick", "Sorkin", "test213@wp.pl", "Qwerty123@");
+
+            // Act
+            var response = await itemParameterClient.RegisterUser(command);
+
+            // Assert
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task When_UserDoesntExist_Should_RegisterUserAndReturnOkStatusCode()
+        {
+            // Arrange
+            var client = factory
+                .SeedData(dbContext =>
+                    dbContext.Roles.AddRange(IdentitiesRequestFactory.GetRoles())
+                )
+                .CreateClient();
             var itemParameterClient = new IdentitiesClient(client);
             var command = new RegisterUserUseCase.Command("Rick", "Sorkin", "test213@wp.pl", "Qwerty123@");
 

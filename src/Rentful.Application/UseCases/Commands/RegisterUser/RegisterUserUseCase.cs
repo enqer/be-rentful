@@ -28,7 +28,8 @@ namespace Rentful.Application.UseCases.Commands.RegisterUser
                     throw new HttpResponseException(HttpStatusCode.BadRequest, "Błąd rejestracji", "Użytkownik już istnieje");
                 }
                 var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.Password);
-                var defaultRole = repository.Roles.First(x => x.Type == RoleEnum.User);
+                var defaultRole = repository.Roles.FirstOrDefault(x => x.Type == RoleEnum.User)
+                    ?? throw new HttpResponseException(HttpStatusCode.BadRequest, "Błąd rejestracji", "Nie można przypisać roli do uzytkownika");
                 var user = new User()
                 {
                     Email = request.Email,

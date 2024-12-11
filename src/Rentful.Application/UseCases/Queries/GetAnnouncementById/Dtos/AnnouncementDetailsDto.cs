@@ -27,5 +27,6 @@
         public string Province { get; set; } = string.Empty;
         public string City { get; set; } = string.Empty;
         public bool IsPrecise { get; set; }
+        public List<ReservationDto> Reservations { get; set; } = new List<ReservationDto>();
     }
 }

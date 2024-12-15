@@ -31,10 +31,10 @@ namespace Rentful.Tests.Controllers.Reservations
                 })
                 .Mock(userResolverMock)
                 .CreateClient();
-            var itemParameterClient = new ReservationsClient(client);
+            var reservationsClient = new ReservationsClient(client);
 
             // Act
-            var response = await itemParameterClient.GetUserReservations(ReservationsRequestFactory.CreateAuthUser());
+            var response = await reservationsClient.GetUserReservations(ReservationsRequestFactory.CreateAuthUser());
 
             // Assert
             var result = await response.ReadNotNullJsonAsync<List<ReservationDto>>();

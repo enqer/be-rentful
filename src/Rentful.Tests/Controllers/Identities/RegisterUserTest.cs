@@ -24,11 +24,11 @@ namespace Rentful.Tests.Controllers.Identities
             {
                 dbContext.Add(IdentitiesRequestFactory.CreateUser());
             }).CreateClient();
-            var itemParameterClient = new IdentitiesClient(client);
+            var identitiesClient = new IdentitiesClient(client);
             var command = new RegisterUserUseCase.Command("Rick", "Sorkin", "test@wp.pl", "Qwerty123@");
 
             // Act
-            var response = await itemParameterClient.RegisterUser(command);
+            var response = await identitiesClient.RegisterUser(command);
 
             // Assert
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
@@ -39,11 +39,11 @@ namespace Rentful.Tests.Controllers.Identities
         {
             // Arrange
             var client = factory.CreateClient();
-            var itemParameterClient = new IdentitiesClient(client);
+            var identitiesClient = new IdentitiesClient(client);
             var command = new RegisterUserUseCase.Command("Rick", "Sorkin", "test213@wp.pl", "Qwerty123@");
 
             // Act
-            var response = await itemParameterClient.RegisterUser(command);
+            var response = await identitiesClient.RegisterUser(command);
 
             // Assert
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
@@ -58,11 +58,11 @@ namespace Rentful.Tests.Controllers.Identities
                     dbContext.Roles.AddRange(IdentitiesRequestFactory.GetRoles())
                 )
                 .CreateClient();
-            var itemParameterClient = new IdentitiesClient(client);
+            var identitiesClient = new IdentitiesClient(client);
             var command = new RegisterUserUseCase.Command("Rick", "Sorkin", "test213@wp.pl", "Qwerty123@");
 
             // Act
-            var response = await itemParameterClient.RegisterUser(command);
+            var response = await identitiesClient.RegisterUser(command);
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);

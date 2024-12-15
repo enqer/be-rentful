@@ -43,11 +43,11 @@ namespace Rentful.Tests.Controllers.Identities
             {
                 dbContext.Add(IdentitiesRequestFactory.CreateUser());
             }).CreateClient();
-            var itemParameterClient = new IdentitiesClient(client);
+            var identitiesClient = new IdentitiesClient(client);
             var command = new AuthUserUseCase.Command("test23@wp.pl", "Qwerty123@");
 
             // Act
-            var response = await itemParameterClient.AuthUser(command);
+            var response = await identitiesClient.AuthUser(command);
 
             // Assert
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
@@ -61,11 +61,11 @@ namespace Rentful.Tests.Controllers.Identities
             {
                 dbContext.Add(IdentitiesRequestFactory.CreateUser());
             }).CreateClient();
-            var itemParameterClient = new IdentitiesClient(client);
+            var identitiesClient = new IdentitiesClient(client);
             var command = new AuthUserUseCase.Command("test@wp.pl", "qweqw3213sdfweQW#E12");
 
             // Act
-            var response = await itemParameterClient.AuthUser(command);
+            var response = await identitiesClient.AuthUser(command);
 
             // Assert
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
@@ -80,11 +80,11 @@ namespace Rentful.Tests.Controllers.Identities
             {
                 dbContext.Add(IdentitiesRequestFactory.CreateUser());
             }).CreateClient();
-            var itemParameterClient = new IdentitiesClient(client);
+            var identitiesClient = new IdentitiesClient(client);
             var command = new AuthUserUseCase.Command("test@wp.pl", "Qwerty123@");
 
             // Act
-            var response = await itemParameterClient.AuthUser(command);
+            var response = await identitiesClient.AuthUser(command);
 
             // Assert
             var result = await response.ReadNotNullJsonAsync<AuthResponse>();

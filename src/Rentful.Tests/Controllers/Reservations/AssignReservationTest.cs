@@ -21,10 +21,10 @@ namespace Rentful.Tests.Controllers.Reservations
         {
             // Arrange
             var client = factory.CreateClient();
-            var itemParameterClient = new ReservationsClient(client);
+            var reservationClient = new ReservationsClient(client);
 
             // Act
-            var response = await itemParameterClient.AssignReservation(1);
+            var response = await reservationClient.AssignReservation(1);
 
             // Assert
             Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
@@ -44,10 +44,10 @@ namespace Rentful.Tests.Controllers.Reservations
                 })
                 .Mock(userResolverMock)
                 .CreateClient();
-            var itemParameterClient = new ReservationsClient(client);
+            var reservationClient = new ReservationsClient(client);
 
             // Act
-            var response = await itemParameterClient.AssignReservation(1, ReservationsRequestFactory.CreateAuthUser());
+            var response = await reservationClient.AssignReservation(1, ReservationsRequestFactory.CreateAuthUser());
 
             // Assert
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
@@ -62,10 +62,10 @@ namespace Rentful.Tests.Controllers.Reservations
                 dbContext.Reservations.AddRange(ReservationsRequestFactory.CreateReservations());
                 dbContext.SaveChanges();
             }).CreateClient();
-            var itemParameterClient = new ReservationsClient(client);
+            var reservationClient = new ReservationsClient(client);
 
             // Act
-            var response = await itemParameterClient.AssignReservation(2, ReservationsRequestFactory.CreateAuthUser());
+            var response = await reservationClient.AssignReservation(2, ReservationsRequestFactory.CreateAuthUser());
 
             // Assert
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
@@ -85,10 +85,10 @@ namespace Rentful.Tests.Controllers.Reservations
                 })
                 .Mock(userResolverMock)
                 .CreateClient();
-            var itemParameterClient = new ReservationsClient(client);
+            var reservationClient = new ReservationsClient(client);
 
             // Act
-            var response = await itemParameterClient.AssignReservation(1, ReservationsRequestFactory.CreateAuthUser());
+            var response = await reservationClient.AssignReservation(1, ReservationsRequestFactory.CreateAuthUser());
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);

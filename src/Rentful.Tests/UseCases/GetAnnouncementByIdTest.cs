@@ -125,7 +125,19 @@ namespace Rentful.Tests.UseCases
                     Id = 3,
                     Date = "14-12-2012 14:12",
                     Status = ReservationStatusEnum.Unapproved
-                }
+                },
+                new Reservation
+                {
+                    Id = 4,
+                    Date = "11-12-2012 14:12",
+                    Status = ReservationStatusEnum.Available
+                },
+                new Reservation
+                {
+                    Id = 5,
+                    Date = "12-11-2012 12:14",
+                    Status = ReservationStatusEnum.Available
+                },
             };
             var apartment = new Apartment()
             {

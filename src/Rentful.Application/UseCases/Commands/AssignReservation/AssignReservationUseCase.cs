@@ -17,10 +17,11 @@ namespace Rentful.Application.UseCases.Commands.AssignReservation
             {
                 var reservation = repository.Reservations.FirstOrDefault(x => x.Id == request.Id)
                     ?? throw new HttpResponseException(HttpStatusCode.NotFound, "Błąd przypisania rezerwacji", "Nie znaleziono rezerwacji");
-                var user = repository.Users.First(x => x.Id == userResolver.UserId);
+                var user = repository.Users.FirstOrDefault(x => x.Id == userResolver.UserId)
+                     ?? throw new HttpResponseException(HttpStatusCode.BadRequest, "Błąd przypisania rezerwacji", "Nie znaleziono użytkownika"); ;
                 reservation.User = user;
                 reservation.Status = ReservationStatusEnum.Unresolved;
-                await repository.SaveChangesAsync();
+                await repository.SaveChangesAsync(cancellationToken);
             }
         }
     }

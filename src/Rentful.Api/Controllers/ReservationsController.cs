@@ -5,9 +5,9 @@ using Rentful.Application.UseCases.Commands.AssignReservation;
 
 namespace Rentful.Api.Controllers
 {
+    [Route("api/v1/[controller]")]
     [Authorize]
     [ApiController]
-    [Route("api/v1/[controller]")]
     public class ReservationsController(IMediator mediator) : ControllerBase
     {
         [HttpPost("{reservationId}")]

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Rentful.Application.UseCases.Queries.GetLocationsProvince;
 
@@ -6,6 +7,7 @@ namespace Rentful.Api.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
+    [Authorize]
     public class LocationsController(IMediator mediator) : ControllerBase
     {
         [HttpGet]

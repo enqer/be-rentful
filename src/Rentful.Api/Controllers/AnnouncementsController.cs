@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Rentful.Application.UseCases.Commands.NewApartment;
 using Rentful.Application.UseCases.Queries.GetAnnouncementById;
@@ -8,6 +9,7 @@ namespace Rentful.Api.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
+    [Authorize]
     public class AnnouncementsController(IMediator mediator) : ControllerBase
     {
         [HttpGet]

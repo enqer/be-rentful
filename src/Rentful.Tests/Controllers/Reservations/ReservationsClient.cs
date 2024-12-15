@@ -1,0 +1,14 @@
+﻿using Rentful.Tests.Common.Extensions;
+using Rentful.Tests.Common.Models;
+
+namespace Rentful.Tests.Controllers.Reservations
+{
+    public class ReservationsClient(HttpClient httpClient)
+    {
+        public async Task<HttpResponseMessage> AssignReservation(int reservationId, User? user = null)
+        {
+            httpClient.Auth(user);
+            return await httpClient.PostAsync($"/api/v1/reservations/{reservationId}", null);
+        }
+    }
+}

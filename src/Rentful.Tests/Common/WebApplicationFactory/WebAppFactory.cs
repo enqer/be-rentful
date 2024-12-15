@@ -16,7 +16,11 @@ namespace Rentful.Tests.Common.WebApplicationFactory
             builder.ConfigureServices(services =>
             {
                 services.ConfigureDbContext();
-                services.AddAuthentication(TestAuthHandler.AuthenticationScheme).AddScheme<AuthenticationSchemeOptions, TestAuthHandler>(TestAuthHandler.AuthenticationScheme, options => { });
+                services.AddAuthentication(o =>
+                {
+                    o.DefaultAuthenticateScheme = TestAuthHandler.AuthenticationScheme;
+                    o.DefaultChallengeScheme = TestAuthHandler.AuthenticationScheme;
+                }).AddScheme<AuthenticationSchemeOptions, TestAuthHandler>(TestAuthHandler.AuthenticationScheme, options => { });
             });
             builder.UseEnvironment("Development");
         }

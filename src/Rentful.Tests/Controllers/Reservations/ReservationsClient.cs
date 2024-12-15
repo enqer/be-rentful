@@ -10,5 +10,11 @@ namespace Rentful.Tests.Controllers.Reservations
             httpClient.Auth(user);
             return await httpClient.PostAsync($"/api/v1/reservations/{reservationId}", null);
         }
+
+        public async Task<HttpResponseMessage> GetUserReservations(User? user = null)
+        {
+            httpClient.Auth(user);
+            return await httpClient.GetAsync($"/api/v1/reservations");
+        }
     }
 }

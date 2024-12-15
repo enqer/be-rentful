@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Rentful.Application.UseCases.Commands.AssignReservation;
+using Rentful.Application.UseCases.Queries.GetUserReservations;
 
 namespace Rentful.Api.Controllers
 {
@@ -16,6 +17,14 @@ namespace Rentful.Api.Controllers
             var command = new AssignReservationUseCase.Command(reservationId);
             await mediator.Send(command);
             return Ok();
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetUserReservations()
+        {
+            var query = new GetUserReservationsUseCase.Query();
+            var response = await mediator.Send(query);
+            return Ok(response);
         }
     }
 }

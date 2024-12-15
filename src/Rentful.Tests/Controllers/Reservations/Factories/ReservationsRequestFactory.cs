@@ -37,6 +37,28 @@ namespace Rentful.Tests.Controllers.Reservations.Factories
             };
         }
 
+        public static List<User> CreateUserReservations()
+        {
+            return new List<User>
+            {
+                new User
+                {
+                    Id = 22,
+                    Email = "test2@wp.pl",
+                    Password = "$2a$11$tuhS17EwyCAYsz1PMOwKlOCp4Brf.HMbaqjAc/7MwOyvJsF5lzro.",
+                    Reservations = new List<Reservation>
+                    {
+                        new Reservation
+                        {
+                            Id = 1,
+                            Date = "2024-12-12 12:12",
+                            Status = ReservationStatusEnum.Unresolved,
+                        }
+                     }
+                }
+            };
+        }
+
         public static List<Role> GetRoles()
         {
             return new List<Role>

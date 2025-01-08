@@ -13,6 +13,8 @@ namespace Rentful.Domain.Entities
         public string Description { get; set; } = string.Empty;
         [Column("date_added", TypeName = "timestamp without time zone")]
         public DateTime DateAdded { get; set; } = DateTime.UtcNow;
+        [Column("date_deleted", TypeName = "timestamp without time zone")]
+        public DateTime? DateDeleted { get; set; } = DateTime.UtcNow;
 
         [Column("apartment_id")]
         public int? ApartmentId { get; set; }

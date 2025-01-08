@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Rentful.Application.UseCases.Commands.DeleteAnnouncement;
 using Rentful.Application.UseCases.Commands.NewApartment;
 using Rentful.Application.UseCases.Queries.GetAnnouncementById;
 using Rentful.Application.UseCases.Queries.GetAnnouncements;
@@ -34,5 +35,15 @@ namespace Rentful.Api.Controllers
             var response = await mediator.Send(command);
             return Ok(response);
         }
+
+        [HttpDelete("{announcementId}")]
+        public async Task<IActionResult> DeleteAnnouncement(int announcementId)
+        {
+            var command = new DeleteAnnouncementUseCase.Command(announcementId);
+            await mediator.Send(command);
+            return Ok();
+        }
+
+
     }
 }

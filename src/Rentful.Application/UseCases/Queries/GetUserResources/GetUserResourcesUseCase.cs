@@ -20,7 +20,7 @@ namespace Rentful.Application.UseCases.Queries.GetUserResources
                     .Where(x => x.UserId == userResolver.UserId)
                     .AsNoTracking()
                     .ToListAsync(cancellationToken);
-                var an = announcements.Where(x => x.DateDeleted != null).Select(x => new AnnouncementDto
+                var openAnnouncements = announcements.Where(x => x.DateDeleted == null).Select(x => new AnnouncementDto
                 {
                     Id = x.Id,
                     DateAdded = x.DateAdded,
@@ -44,7 +44,7 @@ namespace Rentful.Application.UseCases.Queries.GetUserResources
                 });
                 return new ResourcesDto
                 {
-                    Announcements = an,
+                    Announcements = openAnnouncements,
                     Apartments = apartments
                 };
             }

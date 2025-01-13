@@ -18,6 +18,7 @@ namespace Rentful.Infrastructure
                 options.UseNpgsql(connectionString);
             });
             services.AddScoped<IUserResolver, UserResolver>();
+            services.AddScoped<IEmailSender, EmailSender>();
             return services;
         }
         public static WebApplication ApplyMigrations(this WebApplication app)

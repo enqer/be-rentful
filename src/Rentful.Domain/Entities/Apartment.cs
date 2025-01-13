@@ -43,5 +43,7 @@ namespace Rentful.Domain.Entities
         public Location Location { get; set; } = new Location();
 
         public List<Image> Images { get; set; } = new List<Image>();
+
+        public List<LeaseAgreement> LeaseAgreements { get; set; } = new List<LeaseAgreement>();
     }
 }

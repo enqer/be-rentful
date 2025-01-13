@@ -25,6 +25,7 @@ namespace Rentful.Domain.Entities
         public List<Announcement> Announcements { get; set; } = new List<Announcement>();
         public List<Reservation> Reservations { get; set; } = new List<Reservation>();
         public List<Role> Roles { get; set; } = new List<Role>();
+        public List<LeaseAgreement> LeaseAgreements { get; set; } = new List<LeaseAgreement>();
 
     }
 }

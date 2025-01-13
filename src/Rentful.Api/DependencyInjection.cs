@@ -11,6 +11,7 @@ namespace Rentful.Api
         public static void ConfigureOptions(this WebApplicationBuilder webApplicationBuilder)
         {
             webApplicationBuilder.ConfigureOption<JwtSettings>();
+            webApplicationBuilder.ConfigureOption<MailSettings>();
         }
 
         private static WebApplicationBuilder ConfigureOption<T>(this WebApplicationBuilder webApplicationBuilder) where T : class

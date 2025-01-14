@@ -13,16 +13,27 @@ namespace Rentful.Application.UseCases.Queries.GetApartmentById
 
         internal class Handler(IRepository repository) : IRequestHandler<Query, ApartmentDto>
         {
-            public Task<ApartmentDto> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<ApartmentDto> Handle(Query request, CancellationToken cancellationToken)
             {
-                var apartment = repository
+                var apartment = await repository
                     .Announcements
                     .Include(x => x.Apartment)
-                    .FirstOrDefault(x => x.ApartmentId == request.ApartmentId)
+                    .FirstOrDefaultAsync(x => x.ApartmentId == request.ApartmentId, cancellationToken)
                      ?? throw new HttpResponseException(HttpStatusCode.NotFound, "Błąd", "Nie udało się pobrać informacji o mieszkaniu");
 
 
-                throw new NotImplementedException();
+                return new ApartmentDto
+                {
+                    Id = request.ApartmentId,
+                    Tenants = apartment.Apartment.LeaseAgreements.ConvertAll(x => new TenantDto
+                    {
+                        Id = x.Tenant.Id,
+                        FirstName = x.Tenant.FirstName,
+                        LastName = x.Tenant.LastName,
+                        StartDate = x.StartDate,
+                        EndDate = x.EndDate
+                    })
+                };
             }
         }
     }

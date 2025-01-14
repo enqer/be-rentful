@@ -2,5 +2,7 @@
 {
     public class ApartmentDto
     {
+        public int Id { get; set; }
+        public List<TenantDto> Tenants { get; set; } = new List<TenantDto>();
     }
 }

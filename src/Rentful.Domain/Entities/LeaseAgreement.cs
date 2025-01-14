@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Rentful.Domain.Entities.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Rentful.Domain.Entities
 {
@@ -11,8 +12,8 @@ namespace Rentful.Domain.Entities
         public string StartDate { get; set; } = string.Empty;
         [Column("end_date")]
         public string EndDate { get; set; } = string.Empty;
-        [Column("is_accepted")]
-        public bool IsAccepted { get; set; }
+        [Column("status")]
+        public LeaseAgreementStatusEnum Status { get; set; }
 
         public int ApartmentId { get; set; }
         public Apartment Apartment { get; set; } = new Apartment();

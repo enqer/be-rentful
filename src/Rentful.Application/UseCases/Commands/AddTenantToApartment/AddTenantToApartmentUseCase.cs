@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Rentful.Application.Common.Interfaces;
 using Rentful.Domain.Entities;
+using Rentful.Domain.Entities.Enums;
 using Rentful.Domain.Exceptions;
 using System.Net;
 
@@ -10,7 +11,7 @@ namespace Rentful.Application.UseCases.Commands.AddTenantToApartment
     {
         public record Command(int ApartmentId, string TenantGlobalId, string StartDate, string EndDate) : IRequest;
 
-        internal class Handler(IRepository repository, IUserResolver userResolver, IEmailSender emailSender) : IRequestHandler<Command>
+        internal class Handler(IRepository repository, IEmailSender emailSender) : IRequestHandler<Command>
         {
             public async Task Handle(Command request, CancellationToken cancellationToken)
             {
@@ -21,12 +22,12 @@ namespace Rentful.Application.UseCases.Commands.AddTenantToApartment
                 {
                     StartDate = request.StartDate,
                     EndDate = request.EndDate,
-                    IsAccepted = false,
+                    Status = LeaseAgreementStatusEnum.Unresolved,
                     Tenant = user
                 };
                 apartment.LeaseAgreements.Add(agreement);
-                //user.LeaseAgreements.Add(agreement);
                 await repository.SaveChangesAsync(cancellationToken);
+                await emailSender.SendEmailAsync(user.Email, "Otrzymałeś umowę najmu do zaakceptowania!", "Możesz ją sprawdzić w swoim profilu a następnie zdecydować czy chcesz ją przyjąć czy też odrzucić");
             }
         }
     }

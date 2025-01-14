@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Rentful.Application.UseCases.Commands.AddTenantToApartment;
 using Rentful.Application.UseCases.Queries.GetApartmentById;
 
 namespace Rentful.Api.Controllers
@@ -17,6 +18,13 @@ namespace Rentful.Api.Controllers
             var query = new GetApartmentByIdUseCase.Query(apartmentId);
             var response = await mediator.Send(query);
             return Ok(response);
+        }
+
+        [HttpPost("add-tenant")]
+        public async Task<IActionResult> AddTenantToApartment([FromBody] AddTenantToApartmentUseCase.Command command)
+        {
+            await mediator.Send(command);
+            return Ok();
         }
 
     }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Rentful.Infrastructure.Persistence;
@@ -11,9 +12,11 @@ using Rentful.Infrastructure.Persistence;
 namespace Rentful.Infrastructure.Migrations
 {
     [DbContext(typeof(RentfulDbContext))]
-    partial class RentfulDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250114205734_ChangeTypes")]
+    partial class ChangeTypes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

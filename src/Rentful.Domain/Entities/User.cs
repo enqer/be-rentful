@@ -7,6 +7,8 @@ namespace Rentful.Domain.Entities
     {
         [Column("id")]
         public int Id { get; set; }
+        [Column("global_id")]
+        public Guid GlobalId { get; set; } = Guid.NewGuid();
         [Column("email")]
         public string Email { get; set; } = string.Empty;
         [Column("telephone_number")]

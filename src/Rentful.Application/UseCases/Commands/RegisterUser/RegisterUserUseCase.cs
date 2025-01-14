@@ -36,6 +36,7 @@ namespace Rentful.Application.UseCases.Commands.RegisterUser
                     FirstName = request.FirstName,
                     LastName = request.LastName,
                     Password = hashedPassword,
+                    GlobalId = Guid.NewGuid(),
                     Roles = new List<Role>()
                     {
                         defaultRole

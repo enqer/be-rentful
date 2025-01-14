@@ -8,9 +8,11 @@ namespace Rentful.Domain.Entities
         [Column("id")]
         public int Id { get; set; }
         [Column("start_date")]
-        public DateTime StartDate { get; set; }
+        public string StartDate { get; set; } = string.Empty;
         [Column("end_date")]
-        public DateTime EndDate { get; set; }
+        public string EndDate { get; set; } = string.Empty;
+        [Column("is_accepted")]
+        public bool IsAccepted { get; set; }
 
         public int ApartmentId { get; set; }
         public Apartment Apartment { get; set; } = new Apartment();

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Rentful.Infrastructure.Persistence;
@@ -11,9 +12,11 @@ using Rentful.Infrastructure.Persistence;
 namespace Rentful.Infrastructure.Migrations
 {
     [DbContext(typeof(RentfulDbContext))]
-    partial class RentfulDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250114185416_GlobalId")]
+    partial class GlobalId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -215,18 +218,12 @@ namespace Rentful.Infrastructure.Migrations
                     b.Property<int>("ApartmentId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("EndDate")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("end_date");
 
-                    b.Property<bool>("IsAccepted")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_accepted");
-
-                    b.Property<string>("StartDate")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("start_date");
 
                     b.Property<int>("TenantId")

@@ -19,7 +19,7 @@ namespace Rentful.Infrastructure.Services
         {
             var message = new MimeMessage();
 
-            message.From.Add(new MailboxAddress("Rentful", "connectify@onet.pl"));
+            message.From.Add(new MailboxAddress("Rentful", mailSettings.Login));
             message.To.Add(new MailboxAddress("", email));
             message.Subject = subject;
             message.Body = new TextPart("plain")
@@ -28,12 +28,10 @@ namespace Rentful.Infrastructure.Services
             };
 
             using var client = new SmtpClient();
-            client.Connect("smtp.poczta.onet.pl", 465, false);
-            client.Authenticate("connectify@onet.pl", "Conn3ctify");
-            client.Send(message);
-            client.Disconnect(true);
-
-            await Task.CompletedTask;
+            await client.ConnectAsync(mailSettings.Smtp, mailSettings.Port, true);
+            await client.AuthenticateAsync(mailSettings.Login, mailSettings.Password);
+            await client.SendAsync(message);
+            await client.DisconnectAsync(true);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Rentful.Application.UseCases.Queries.GetUserInfo.Dtos
 {
-    public class UserDto
+    public class UserDetailsDto
     {
         public Guid GlobalId { get; set; }
         public string Email { get; set; } = string.Empty;

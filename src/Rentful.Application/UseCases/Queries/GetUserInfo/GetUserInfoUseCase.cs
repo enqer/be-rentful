@@ -7,14 +7,14 @@ namespace Rentful.Application.UseCases.Queries.GetUserInfo
 {
     public class GetUserInfoUseCase
     {
-        public record Query : IRequest<UserDto>;
+        public record Query : IRequest<UserDetailsDto>;
 
-        internal class Handler(IUserResolver userResolver, IRepository repository) : IRequestHandler<Query, UserDto>
+        internal class Handler(IUserResolver userResolver, IRepository repository) : IRequestHandler<Query, UserDetailsDto>
         {
-            public async Task<UserDto> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<UserDetailsDto> Handle(Query request, CancellationToken cancellationToken)
             {
                 var user = await repository.Users.FirstAsync(x => x.Id == userResolver.UserId, cancellationToken);
-                return new UserDto
+                return new UserDetailsDto
                 {
                     Email = user.Email,
                     FirstName = user.FirstName,

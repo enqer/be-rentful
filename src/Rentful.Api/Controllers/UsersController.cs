@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Rentful.Application.UseCases.Commands.ChangePassword;
+using Rentful.Application.UseCases.Commands.ChangeUserAddress;
+using Rentful.Application.UseCases.Queries.GetUserAddress;
 using Rentful.Application.UseCases.Queries.GetUserInfo;
 
 namespace Rentful.Api.Controllers
@@ -20,8 +22,23 @@ namespace Rentful.Api.Controllers
             return Ok(response);
         }
 
-        [HttpPost("change-password")]
+        [HttpGet("address")]
+        public async Task<IActionResult> GetUserAddress()
+        {
+            var query = new GetUserAddressUseCase.Query();
+            var response = await mediator.Send(query);
+            return Ok(response);
+        }
+
+        [HttpPut("password")]
         public async Task<IActionResult> ChangeUserPassword([FromBody] ChangePasswordUseCase.Command command)
+        {
+            await mediator.Send(command);
+            return Ok();
+        }
+
+        [HttpPut("address")]
+        public async Task<IActionResult> ChangeUserAddres([FromBody] ChangeUserAddressUseCase.Command command)
         {
             await mediator.Send(command);
             return Ok();

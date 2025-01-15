@@ -47,7 +47,7 @@ namespace Rentful.Infrastructure.Migrations
                 name: "IX_lease_agreements_ApartmentId",
                 schema: "rentful",
                 table: "lease_agreements",
-                column: "ApartmentId");
+                column: "AnnouncementId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_lease_agreements_TenantId",

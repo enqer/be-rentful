@@ -14,7 +14,12 @@ namespace Rentful.Domain.Entities
         public string EndDate { get; set; } = string.Empty;
         [Column("status")]
         public LeaseAgreementStatusEnum Status { get; set; }
-
+        [Column("price")]
+        public double Price { get; set; }
+        [Column("rent")]
+        public double? Rent { get; set; }
+        [Column("deposit")]
+        public double? Deposit { get; set; }
         public int ApartmentId { get; set; }
         public Apartment Apartment { get; set; } = new Apartment();
 

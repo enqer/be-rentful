@@ -12,8 +12,8 @@ using Rentful.Infrastructure.Persistence;
 namespace Rentful.Infrastructure.Migrations
 {
     [DbContext(typeof(RentfulDbContext))]
-    [Migration("20250114205734_ChangeTypes")]
-    partial class ChangeTypes
+    [Migration("20250115220414_AgreementPricing")]
+    partial class AgreementPricing
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -218,19 +218,31 @@ namespace Rentful.Infrastructure.Migrations
                     b.Property<int>("AnnouncementId")
                         .HasColumnType("integer");
 
+                    b.Property<double?>("Deposit")
+                        .HasColumnType("double precision")
+                        .HasColumnName("deposit");
+
                     b.Property<string>("EndDate")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("end_date");
 
-                    b.Property<bool>("IsAccepted")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_accepted");
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision")
+                        .HasColumnName("price");
+
+                    b.Property<double?>("Rent")
+                        .HasColumnType("double precision")
+                        .HasColumnName("rent");
 
                     b.Property<string>("StartDate")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("start_date");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
 
                     b.Property<int>("TenantId")
                         .HasColumnType("integer");

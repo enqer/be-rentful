@@ -9,7 +9,7 @@ namespace Rentful.Application.UseCases.Commands.AddTenantToApartment
 {
     public static class AddTenantToApartmentUseCase
     {
-        public record Command(int ApartmentId, string TenantGlobalId, string StartDate, string EndDate) : IRequest;
+        public record Command(int ApartmentId, string TenantGlobalId, string StartDate, string EndDate, int Price, int Rent, int Deposit) : IRequest;
 
         internal class Handler(IRepository repository, IEmailSender emailSender) : IRequestHandler<Command>
         {
@@ -23,7 +23,10 @@ namespace Rentful.Application.UseCases.Commands.AddTenantToApartment
                     StartDate = request.StartDate,
                     EndDate = request.EndDate,
                     Status = LeaseAgreementStatusEnum.Unresolved,
-                    Tenant = user
+                    Tenant = user,
+                    Deposit = request.Deposit,
+                    Price = request.Price,
+                    Rent = request.Rent
                 };
                 apartment.LeaseAgreements.Add(agreement);
                 await repository.SaveChangesAsync(cancellationToken);

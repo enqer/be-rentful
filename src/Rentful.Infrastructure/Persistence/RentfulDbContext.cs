@@ -11,7 +11,6 @@ namespace Rentful.Infrastructure.Persistence
         public RentfulDbContext(DbContextOptions<RentfulDbContext> options) : base(options) { }
 
         public DbSet<Reservation> Reservations => Set<Reservation>();
-
         public DbSet<Role> Roles => Set<Role>();
         public DbSet<User> Users => Set<User>();
         public DbSet<Address> Addresses => Set<Address>();
@@ -19,7 +18,7 @@ namespace Rentful.Infrastructure.Persistence
         public DbSet<Location> Locations => Set<Location>();
         public DbSet<Apartment> Apartments => Set<Apartment>();
         public DbSet<Announcement> Announcements => Set<Announcement>();
-
+        public DbSet<LeaseAgreement> LeaseAgreements => Set<LeaseAgreement>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

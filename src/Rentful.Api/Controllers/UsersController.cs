@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Rentful.Application.UseCases.Commands.ChangePassword;
 using Rentful.Application.UseCases.Commands.ChangeUserAddress;
+using Rentful.Application.UseCases.Queries.GetUseLeaseAgreements;
 using Rentful.Application.UseCases.Queries.GetUserAddress;
 using Rentful.Application.UseCases.Queries.GetUserInfo;
 
@@ -30,6 +31,15 @@ namespace Rentful.Api.Controllers
             return Ok(response);
         }
 
+        [HttpGet("lease-agreements")]
+        public async Task<IActionResult> GetUserLeaseAgreements()
+        {
+            var query = new GetUserLeaseAgreementsUseCase.Query();
+            var response = await mediator.Send(query);
+            return Ok(response);
+        }
+
+
         [HttpPut("password")]
         public async Task<IActionResult> ChangeUserPassword([FromBody] ChangePasswordUseCase.Command command)
         {
@@ -43,5 +53,7 @@ namespace Rentful.Api.Controllers
             await mediator.Send(command);
             return Ok();
         }
+
+
     }
 }

@@ -35,7 +35,7 @@ namespace Rentful.Application.UseCases.Queries.GetUseLeaseAgreements
                     {
                         Deposit = z.Deposit ?? 0,
                         EndDate = z.EndDate,
-                        Id = y.Id,
+                        Id = z.Id,
                         Price = z.Price,
                         Rent = z.Rent ?? 0,
                         StartDate = z.StartDate,

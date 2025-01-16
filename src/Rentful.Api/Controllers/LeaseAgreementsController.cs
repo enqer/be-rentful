@@ -1,0 +1,23 @@
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Rentful.Application.UseCases.Commands.SetLeaseAgreementStatus;
+using Rentful.Domain.Entities.Enums;
+
+namespace Rentful.Api.Controllers
+{
+    [ApiController]
+    [Route("api/v1/[controller]")]
+    [Authorize]
+    public class LeaseAgreementsController(IMediator mediator) : ControllerBase
+    {
+        [HttpPost("{agreementId}/{status}")]
+        public async Task<IActionResult> SetLeaseAgreementStatus(int agreementId, LeaseAgreementStatusEnum status)
+        {
+            var command = new SetLeaseAgreementStatusUseCase.Command(agreementId, status);
+            await mediator.Send(command);
+            return Ok();
+        }
+
+    }
+}

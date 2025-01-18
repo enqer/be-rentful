@@ -15,7 +15,7 @@ namespace Rentful.Application.UseCases.Queries.GetApartmentById
         {
             public async Task<ApartmentDto> Handle(Query request, CancellationToken cancellationToken)
             {
-                var apartment = await repository
+                var announcement = await repository
                     .Announcements
                     .Include(x => x.Apartment)
                     .ThenInclude(x => x.LeaseAgreements)
@@ -28,7 +28,8 @@ namespace Rentful.Application.UseCases.Queries.GetApartmentById
                 return new ApartmentDto
                 {
                     Id = request.ApartmentId,
-                    Tenants = apartment.Apartment.LeaseAgreements.ConvertAll(x => new TenantDto
+                    HasAnnouncement = announcement.DateDeleted is null,
+                    Tenants = announcement.Apartment.LeaseAgreements.ConvertAll(x => new TenantDto
                     {
                         Id = x.Tenant.Id,
                         LeaseAgreementId = x.Id,

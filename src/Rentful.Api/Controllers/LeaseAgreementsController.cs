@@ -8,7 +8,7 @@ using Rentful.Domain.Entities.Enums;
 namespace Rentful.Api.Controllers
 {
     [ApiController]
-    [Route("api/v1/[controller]")]
+    [Route("api/v1/lease-agreements")]
     [Authorize]
     public class LeaseAgreementsController(IMediator mediator) : ControllerBase
     {

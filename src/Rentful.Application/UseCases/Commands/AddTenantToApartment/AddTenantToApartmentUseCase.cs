@@ -24,6 +24,7 @@ namespace Rentful.Application.UseCases.Commands.AddTenantToApartment
                     EndDate = request.EndDate,
                     Status = LeaseAgreementStatusEnum.Unresolved,
                     Tenant = user,
+                    TenantRating = TenantRatingEnum.NotRated,
                     Deposit = request.Deposit,
                     Price = request.Price,
                     Rent = request.Rent

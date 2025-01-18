@@ -31,6 +31,7 @@ namespace Rentful.Application.UseCases.Queries.GetApartmentById
                     Tenants = apartment.Apartment.LeaseAgreements.ConvertAll(x => new TenantDto
                     {
                         Id = x.Tenant.Id,
+                        LeaseAgreementId = x.Id,
                         GlobalId = x.Tenant.GlobalId,
                         Rating = x.TenantRating,
                         Email = x.Tenant.Email,

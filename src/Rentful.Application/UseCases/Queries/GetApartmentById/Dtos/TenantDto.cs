@@ -1,10 +1,13 @@
-﻿namespace Rentful.Application.UseCases.Queries.GetApartmentById.Dtos
+﻿using Rentful.Domain.Entities.Enums;
+
+namespace Rentful.Application.UseCases.Queries.GetApartmentById.Dtos
 {
     public class TenantDto
     {
+        public int LeaseAgreementId { get; set; }
         public int Id { get; set; }
         public Guid GlobalId { get; set; }
-        public short Rating { get; set; }
+        public TenantRatingEnum Rating { get; set; }
         public string Email { get; set; } = string.Empty;
         public string? PhoneNumber { get; set; } = string.Empty;
         public string FirstName { get; set; } = string.Empty;

@@ -9,7 +9,7 @@ namespace Rentful.Domain.Entities
         [Column("id")]
         public int Id { get; set; }
         [Column("rating_tenant")]
-        public short TenantRating { get; set; }
+        public TenantRatingEnum TenantRating { get; set; }
         [Column("start_date")]
         public string StartDate { get; set; } = string.Empty;
         [Column("end_date")]

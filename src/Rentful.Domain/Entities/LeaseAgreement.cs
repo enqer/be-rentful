@@ -8,6 +8,8 @@ namespace Rentful.Domain.Entities
     {
         [Column("id")]
         public int Id { get; set; }
+        [Column("rating_tenant")]
+        public short TenantRating { get; set; }
         [Column("start_date")]
         public string StartDate { get; set; } = string.Empty;
         [Column("end_date")]
@@ -20,9 +22,10 @@ namespace Rentful.Domain.Entities
         public double? Rent { get; set; }
         [Column("deposit")]
         public double? Deposit { get; set; }
+        [Column("apartment_id")]
         public int ApartmentId { get; set; }
         public Apartment Apartment { get; set; } = new Apartment();
-
+        [Column("tenant_id")]
         public int TenantId { get; set; }
         public User Tenant { get; set; } = new User();
     }

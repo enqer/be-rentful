@@ -20,6 +20,8 @@ namespace Rentful.Infrastructure.Persistence
         public DbSet<Announcement> Announcements => Set<Announcement>();
         public DbSet<LeaseAgreement> LeaseAgreements => Set<LeaseAgreement>();
 
+        public DbSet<Report> Reports => Set<Report>();
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

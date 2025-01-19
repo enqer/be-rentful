@@ -14,6 +14,7 @@ namespace Rentful.Application.Common.Interfaces
         public DbSet<Reservation> Reservations { get; }
         public DbSet<Role> Roles { get; }
         public DbSet<LeaseAgreement> LeaseAgreements { get; }
+        public DbSet<Report> Reports { get; }
 
         int SaveChanges();
         int SaveChanges(bool acceptAllChangesOnSuccess);

@@ -28,5 +28,7 @@ namespace Rentful.Domain.Entities
         [Column("tenant_id")]
         public int TenantId { get; set; }
         public User Tenant { get; set; } = new User();
+
+        public List<Report> Reports { get; set; } = new List<Report>();
     }
 }

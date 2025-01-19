@@ -15,6 +15,7 @@
         public bool HasElevator { get; set; }
         public bool HasBalcony { get; set; }
         public bool HasParkingSpace { get; set; }
+        public int LeaseAgreementId { get; set; }
         public int OwnerId { get; set; }
         public string OwnerFirstName { get; set; } = string.Empty;
         public string OwnerLastName { get; set; } = string.Empty;

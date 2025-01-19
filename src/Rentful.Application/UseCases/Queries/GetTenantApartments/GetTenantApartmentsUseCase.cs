@@ -40,6 +40,7 @@ namespace Rentful.Application.UseCases.Queries.GetTenantApartments
                         Rent = x.Apartment.Rent,
                         EndDate = leaseAgreement.EndDate,
                         StartDate = leaseAgreement.StartDate,
+                        LeaseAgreementId = leaseAgreement.Id,
                         OwnerId = x.User.Id,
                         OwnerFirstName = x.User.FirstName,
                         OwnerLastName = x.User.LastName,

@@ -22,6 +22,8 @@ namespace Rentful.Domain.Entities
         public double? Rent { get; set; }
         [Column("deposit")]
         public double? Deposit { get; set; }
+        [Column("balance")]
+        public double Balance { get; set; }
         [Column("apartment_id")]
         public int ApartmentId { get; set; }
         public Apartment Apartment { get; set; } = new Apartment();
@@ -30,5 +32,6 @@ namespace Rentful.Domain.Entities
         public User Tenant { get; set; } = new User();
 
         public List<Report> Reports { get; set; } = new List<Report>();
+        public List<Payment> Payments { get; set; } = new List<Payment>();
     }
 }

@@ -19,8 +19,8 @@ namespace Rentful.Infrastructure.Persistence
         public DbSet<Apartment> Apartments => Set<Apartment>();
         public DbSet<Announcement> Announcements => Set<Announcement>();
         public DbSet<LeaseAgreement> LeaseAgreements => Set<LeaseAgreement>();
-
         public DbSet<Report> Reports => Set<Report>();
+        public DbSet<Payment> Payments => Set<Payment>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Rentful.Application.UseCases.Commands.AddReport;
+using Rentful.Application.UseCases.Commands.ResolveReport;
 using Rentful.Application.UseCases.Queries.GetReportsByLeaseAgreement;
 
 namespace Rentful.Api.Controllers
@@ -22,6 +23,14 @@ namespace Rentful.Api.Controllers
 
         [HttpPost]
         public async Task<IActionResult> AddReport([FromBody] AddReportUseCase.Command command)
+        {
+            await mediator.Send(command);
+            return Ok();
+        }
+
+
+        [HttpPut]
+        public async Task<IActionResult> ResolveReport([FromBody] ResolveReportUseCase.Command command)
         {
             await mediator.Send(command);
             return Ok();

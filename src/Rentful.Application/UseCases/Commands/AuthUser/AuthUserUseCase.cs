@@ -26,6 +26,8 @@ namespace Rentful.Application.UseCases.Commands.LoginUser
                 var user = repository
                     .Users
                     .Include(x => x.Roles)
+                    .Include(x => x.Announcements)
+                    .ThenInclude(x => x.Apartment)
                     .FirstOrDefault(x => x.Email == request.Email)
                     ?? throw new HttpResponseException(HttpStatusCode.NotFound, "Błąd użytkownika", "Nie znaleziono użytkownika");
                 var isPasswordCorrect = BCrypt.Net.BCrypt.Verify(request.Password, user.Password);
@@ -45,6 +47,7 @@ namespace Rentful.Application.UseCases.Commands.LoginUser
                 new Claim("lastName", user.LastName),
                 };
                 user.Roles.ForEach(x => claims.Add(new Claim("roles", x.Name)));
+                user.Announcements.Select(x => x.Apartment).ToList().ForEach(x => claims.Add(new Claim("userApartments", x.Id.ToString())));
 
                 var tokenDesc = new SecurityTokenDescriptor
                 {

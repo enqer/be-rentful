@@ -2,7 +2,6 @@
 using Rentful.Application.Common.Interfaces;
 using Rentful.Application.UseCases.Commands.AddAnnouncement.Dtos;
 using Rentful.Application.UseCases.Commands.NewApartment.Dtos;
-using Rentful.Domain.ConstantValues;
 using Rentful.Domain.Entities;
 using Rentful.Domain.Entities.Enums;
 using Rentful.Domain.Exceptions;
@@ -133,12 +132,7 @@ namespace Rentful.Application.UseCases.Commands.NewApartment
                     User = user,
                     Reservations = reservations
                 };
-                var role = new Role
-                {
-                    Type = RoleEnum.Owner,
-                    Name = RoleName.Owner
-                };
-                user.Roles.Add(role);
+                var role = repository.Roles.First(x => x.Type == RoleEnum.Owner);
                 repository.Announcements.Add(annoucement);
                 await repository.SaveChangesAsync(cancellationToken);
                 return new AddAnnouncementResponse

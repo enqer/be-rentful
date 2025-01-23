@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using MimeKit;
 using Rentful.Application.Common.Interfaces;
+using Rentful.Domain.Entities;
 using Rentful.Domain.Options;
 
 namespace Rentful.Infrastructure.Services
@@ -31,6 +32,25 @@ namespace Rentful.Infrastructure.Services
             await client.ConnectAsync(mailSettings.Smtp, mailSettings.Port, true);
             await client.AuthenticateAsync(mailSettings.Login, mailSettings.Password);
             await client.SendAsync(message);
+            await client.DisconnectAsync(true);
+        }
+
+        public async Task SendEmailFromUserAsync(User sender, string recepient, string subject, string message)
+        {
+            var msg = new MimeMessage();
+
+            msg.From.Add(new MailboxAddress($"{sender.FirstName} {sender.LastName}", mailSettings.Login));
+            msg.To.Add(new MailboxAddress("", recepient));
+            msg.Subject = subject;
+            msg.Body = new TextPart("plain")
+            {
+                Text = message
+            };
+
+            using var client = new SmtpClient();
+            await client.ConnectAsync(mailSettings.Smtp, mailSettings.Port, true);
+            await client.AuthenticateAsync(mailSettings.Login, mailSettings.Password);
+            await client.SendAsync(msg);
             await client.DisconnectAsync(true);
         }
     }

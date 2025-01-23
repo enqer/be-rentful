@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Rentful.Application.UseCases.Commands.ChangePassword;
 using Rentful.Application.UseCases.Commands.ChangeUserAddress;
 using Rentful.Application.UseCases.Commands.RemindPassword;
+using Rentful.Application.UseCases.Commands.SendMailToUser;
 using Rentful.Application.UseCases.Queries.GetTenantApartments;
 using Rentful.Application.UseCases.Queries.GetUseLeaseAgreements;
 using Rentful.Application.UseCases.Queries.GetUserAddress;
@@ -55,6 +56,13 @@ namespace Rentful.Api.Controllers
         public async Task<IActionResult> ResetPassword(string email)
         {
             var command = new ResetPasswordUseCase.Command(email);
+            await mediator.Send(command);
+            return Ok();
+        }
+        
+        [HttpPost("send-email")]
+        public async Task<IActionResult> SendMailToUser([FromBody] SendMailToUserUseCase.Command command)
+        {
             await mediator.Send(command);
             return Ok();
         }

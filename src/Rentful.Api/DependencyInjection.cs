@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using MassTransit;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using NLog.Extensions.Logging;
 using Rentful.Domain.Options;
@@ -50,6 +51,26 @@ namespace Rentful.Api
                 logging.SetMinimumLevel(LogLevel.Information);
             });
             webApplicationBuilder.Services.AddSingleton<ILoggerProvider, NLogLoggerProvider>();
+        }
+
+        public static void ConfigureMassTransit(this WebApplicationBuilder webApplicationBuilder)
+        {
+            webApplicationBuilder.Host.ConfigureServices((hostContext, services) =>
+            {
+                services.AddMassTransit(x =>
+                {
+                    x.UsingRabbitMq((context, cfg) =>
+                    {
+                        cfg.Host("localhost", "/", h =>
+                        {
+                            h.Username("guest");
+                            h.Password("guest");
+                        });
+
+                        cfg.ConfigureEndpoints(context);
+                    });
+                });
+            });
         }
     }
 }

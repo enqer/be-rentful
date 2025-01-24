@@ -20,6 +20,7 @@ builder.Services.AddControllers();
 
 builder.ConfigureLogging();
 builder.ConfigureOptions();
+builder.ConfigureMassTransit();
 
 
 

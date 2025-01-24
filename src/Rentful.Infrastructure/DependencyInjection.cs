@@ -19,7 +19,7 @@ namespace Rentful.Infrastructure
             });
             services.AddScoped<IUserResolver, UserResolver>();
             services.AddScoped<IEmailSender, EmailSender>();
-            builder.Services.AddTransient<IMessagePublisher, MessagePublisher>();
+            services.AddTransient<IMessagePublisher, MessagePublisher>();
             return services;
         }
         public static WebApplication ApplyMigrations(this WebApplication app)

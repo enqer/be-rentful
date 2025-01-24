@@ -2,6 +2,7 @@ using Rentful.Api;
 using Rentful.Application;
 using Rentful.Application.Middlewares;
 using Rentful.Infrastructure;
+using Rentful.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,8 @@ builder.Services.AddControllers();
 builder.ConfigureLogging();
 builder.ConfigureOptions();
 builder.ConfigureMassTransit();
+
+builder.Services.AddSignalR();
 
 
 
@@ -43,6 +46,8 @@ app.UseAuthorization();
 app.UseMiddleware<ValidationMiddleware>();
 
 app.MapControllers();
+
+app.MapHub<NotificationHub>("/notificationHub");
 
 //app.ApplyMigrations();
 

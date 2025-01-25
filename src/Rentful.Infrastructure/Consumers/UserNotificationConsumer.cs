@@ -1,5 +1,6 @@
 ﻿using MassTransit;
 using Microsoft.AspNetCore.SignalR;
+using Rentful.Infrastructure.Consumers.Dtos;
 using Rentful.Infrastructure.Services;
 using Rentful.MassTransit.Models;
 
@@ -10,9 +11,18 @@ namespace Rentful.Infrastructure.Consumers
         public async Task Consume(ConsumeContext<UserNotification> context)
         {
             var notification = context.Message;
-            foreach (var email in notification.Recepients)
+            var notify = new SendNotify
             {
-                await hubContext.Clients.Group(email).SendAsync("user-notifications", notification.Message);
+                SenderLastName = notification.SenderLastName,
+                SenderFirstName = notification.SenderFirstName,
+                SenderEmail = notification.SenderEmail,
+                Subject = notification.Subject,
+                Content = notification.Content,
+                Guid = Guid.NewGuid(),
+            };
+            foreach (var email in notification.Recipients)
+            {
+                await hubContext.Clients.Group(email).SendAsync("user-notifications", notify);
             }
         }
     }

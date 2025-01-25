@@ -5,6 +5,7 @@ using Rentful.Application.UseCases.Commands.ChangePassword;
 using Rentful.Application.UseCases.Commands.ChangeUserAddress;
 using Rentful.Application.UseCases.Commands.RemindPassword;
 using Rentful.Application.UseCases.Commands.SendMailToUser;
+using Rentful.Application.UseCases.Commands.SendNotifyToUser;
 using Rentful.Application.UseCases.Queries.GetTenantApartments;
 using Rentful.Application.UseCases.Queries.GetUseLeaseAgreements;
 using Rentful.Application.UseCases.Queries.GetUserAddress;
@@ -59,9 +60,16 @@ namespace Rentful.Api.Controllers
             await mediator.Send(command);
             return Ok();
         }
-        
+
         [HttpPost("send-email")]
         public async Task<IActionResult> SendMailToUser([FromBody] SendMailToUserUseCase.Command command)
+        {
+            await mediator.Send(command);
+            return Ok();
+        }
+
+        [HttpPost("send-notify")]
+        public async Task<IActionResult> SendNotifyToUser([FromBody] SendNotifyToUserUseCase.Command command)
         {
             await mediator.Send(command);
             return Ok();

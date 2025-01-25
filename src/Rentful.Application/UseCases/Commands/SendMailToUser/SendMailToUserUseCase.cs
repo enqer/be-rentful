@@ -8,7 +8,7 @@ namespace Rentful.Application.UseCases.Commands.SendMailToUser
 {
     public static class SendMailToUserUseCase
     {
-        public record Command(string Subject, string Content, string Recepient) : IRequest;
+        public record Command(string Subject, string Content, string Recipient) : IRequest;
 
         internal class Handler(IUserResolver userResolver, IEmailSender emailSender, IRepository repository) : IRequestHandler<Command>
         {
@@ -16,7 +16,7 @@ namespace Rentful.Application.UseCases.Commands.SendMailToUser
             {
                 var user = await repository.Users.FirstOrDefaultAsync(x => x.Id == userResolver.UserId, cancellationToken)
                     ?? throw new HttpResponseException(HttpStatusCode.NotFound, "Błąd", "Nie znaleziono użytkownika");
-                await emailSender.SendEmailFromUserAsync(user, request.Recepient, request.Subject, request.Content);
+                await emailSender.SendEmailFromUserAsync(user, request.Recipient, request.Subject, request.Content);
             }
         }
     }

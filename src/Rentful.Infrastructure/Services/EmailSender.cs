@@ -35,12 +35,12 @@ namespace Rentful.Infrastructure.Services
             await client.DisconnectAsync(true);
         }
 
-        public async Task SendEmailFromUserAsync(User sender, string recepient, string subject, string message)
+        public async Task SendEmailFromUserAsync(User sender, string recipient, string subject, string message)
         {
             var msg = new MimeMessage();
 
             msg.From.Add(new MailboxAddress($"{sender.FirstName} {sender.LastName}", mailSettings.Login));
-            msg.To.Add(new MailboxAddress("", recepient));
+            msg.To.Add(new MailboxAddress("", recipient));
             msg.Subject = subject;
             msg.Body = new TextPart("plain")
             {

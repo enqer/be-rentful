@@ -2,7 +2,7 @@
 {
     public class UserNotification
     {
-        public string Email { get; set; } = string.Empty;
+        public List<string> Recepients { get; set; } = new List<string>();
         public string Message { get; set; } = string.Empty;
     }
 }

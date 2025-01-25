@@ -10,8 +10,10 @@ namespace Rentful.Infrastructure.Consumers
         public async Task Consume(ConsumeContext<UserNotification> context)
         {
             var notification = context.Message;
-            Console.WriteLine($"Notification sent to {notification.Email}: {notification.Message}");
-            await hubContext.Clients.All.SendAsync("ReceiveNotification", notification.Email, notification.Message);
+            foreach (var email in notification.Recepients)
+            {
+                await hubContext.Clients.Group(email).SendAsync("user-notifications", notification.Message);
+            }
         }
     }
 }

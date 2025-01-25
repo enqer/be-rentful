@@ -42,7 +42,7 @@ namespace Rentful.Application.UseCases.Commands.LoginUser
                 {
                 new Claim(JwtRegisteredClaimNames.Sub, "rentful"),
                 new Claim("userId", user.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                new Claim("email", user.Email),
                 new Claim("firstName", user.FirstName),
                 new Claim("lastName", user.LastName),
                 };

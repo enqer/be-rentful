@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using NLog.Extensions.Logging;
 using Rentful.Domain.Options;
+using Rentful.Infrastructure.Consumers;
 using System.Text;
 
 namespace Rentful.Api
@@ -40,6 +41,18 @@ namespace Rentful.Api
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true
                 };
+                x.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        var accessToken = context.Request.Query["access_token"];
+                        if (!string.IsNullOrEmpty(accessToken) && context.HttpContext.Request.Path.StartsWithSegments("/notificationHub"))
+                        {
+                            context.Token = accessToken;
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
             });
         }
 
@@ -59,6 +72,8 @@ namespace Rentful.Api
             {
                 services.AddMassTransit(x =>
                 {
+                    x.AddConsumer<UserNotificationConsumer>();
+
                     x.UsingRabbitMq((context, cfg) =>
                     {
                         cfg.Host("localhost", "/", h =>
@@ -67,8 +82,25 @@ namespace Rentful.Api
                             h.Password("guest");
                         });
 
-                        cfg.ConfigureEndpoints(context);
+                        cfg.ReceiveEndpoint("user-notifications", e =>
+                        {
+                            e.ConfigureConsumer<UserNotificationConsumer>(context);
+                        });
                     });
+                });
+            });
+        }
+
+        public static void ConfigureCors(this WebApplicationBuilder webApplicationBuilder)
+        {
+            webApplicationBuilder.Services.AddCors((options) =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.WithOrigins("http://localhost:5173")
+                           .AllowAnyHeader()
+                           .AllowAnyMethod()
+                           .AllowCredentials();
                 });
             });
         }

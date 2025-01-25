@@ -22,6 +22,7 @@ builder.Services.AddControllers();
 builder.ConfigureLogging();
 builder.ConfigureOptions();
 builder.ConfigureMassTransit();
+builder.ConfigureCors();
 
 builder.Services.AddSignalR();
 
@@ -46,8 +47,11 @@ app.UseAuthorization();
 app.UseMiddleware<ValidationMiddleware>();
 
 app.MapControllers();
+app.UseCors();
+
 
 app.MapHub<NotificationHub>("/notificationHub");
+
 
 //app.ApplyMigrations();
 

@@ -28,5 +28,13 @@ namespace Rentful.Api.Controllers
             return Ok();
         }
 
+        [HttpGet("{agreementId}/tenant/raport")]
+        public async Task<IActionResult> GetTenantRaport(int agreementId, TenantRatingEnum rate)
+        {
+            var command = new SetTenantRatingUseCase.Command(agreementId, rate);
+            await mediator.Send(command);
+            return Ok();
+        }
+
     }
 }

@@ -17,6 +17,9 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.4" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
 	<PackageReference Include="NLog.Web.AspNetCore" Version="5.3.11" />
+	<PackageReference Include="QRCoder" Version="1.6.0" />
+	  <PackageReference Include="QuestPDF" Version="2024.12.3" />
+
   </ItemGroup>
 
   <ItemGroup>

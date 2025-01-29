@@ -20,6 +20,7 @@ namespace Rentful.Infrastructure
             services.AddScoped<IUserResolver, UserResolver>();
             services.AddScoped<IEmailSender, EmailSender>();
             services.AddScoped<IMessagePublisher, MessagePublisher>();
+            services.AddScoped<IPdfService, PdfService>();
             return services;
         }
         public static WebApplication ApplyMigrations(this WebApplication app)

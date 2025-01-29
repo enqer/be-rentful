@@ -1,8 +1,12 @@
+using QuestPDF.Infrastructure;
 using Rentful.Api;
 using Rentful.Application;
 using Rentful.Application.Middlewares;
 using Rentful.Infrastructure;
 using Rentful.Infrastructure.Services;
+
+
+QuestPDF.Settings.License = LicenseType.Community;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Rentful.Application.UseCases.Commands.SetLeaseAgreementStatus;
 using Rentful.Application.UseCases.Commands.SetTenantRating;
+using Rentful.Application.UseCases.Queries.GetTenantRaport;
 using Rentful.Domain.Entities.Enums;
 
 namespace Rentful.Api.Controllers
@@ -28,12 +29,12 @@ namespace Rentful.Api.Controllers
             return Ok();
         }
 
-        [HttpGet("{agreementId}/tenant/raport")]
-        public async Task<IActionResult> GetTenantRaport(int agreementId, TenantRatingEnum rate)
+        [HttpGet("{agreementId}/report")]
+        public async Task<IActionResult> GetTenantReport(int agreementId)
         {
-            var command = new SetTenantRatingUseCase.Command(agreementId, rate);
-            await mediator.Send(command);
-            return Ok();
+            var query = new GetTenantReportUseCase.Query(agreementId);
+            var pdf = await mediator.Send(query);
+            return File(pdf, "application/pdf", $"raport_{agreementId}.pdf");
         }
 
     }

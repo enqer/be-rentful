@@ -132,7 +132,6 @@ namespace Rentful.Application.UseCases.Commands.NewApartment
                     User = user,
                     Reservations = reservations
                 };
-                var role = repository.Roles.First(x => x.Type == RoleEnum.Owner);
                 repository.Announcements.Add(annoucement);
                 await repository.SaveChangesAsync(cancellationToken);
                 return new AddAnnouncementResponse
